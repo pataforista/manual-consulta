@@ -1,0 +1,34 @@
+{
+  "id": "lifestyle_nutrition",
+  "title": "Alimentación",
+  "audience": "both",
+  "tags": [
+    "lifestyle",
+    "nutrition"
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "id": "lifestyle_nutrition_intro",
+      "title": "Alimentación",
+      "audience": "both",
+      "content": "-  Dieta de la milpa \n-  Plato del bien comer  \n-  Grupos de alimentos \nRecursos para pacientes abajo!!!! \n \n \n3 \n4 \n \n \n5"
+    },
+    {
+      "type": "checklist",
+      "id": "lifestyle_nutrition_points",
+      "title": "Puntos prácticos",
+      "audience": "both",
+      "items": [
+        "Dieta de la milpa",
+        "Plato del bien comer",
+        "Grupos de alimentos"
+      ]
+    }
+  ],
+  "meta": {
+    "source": "manual_de_consulta_comorbilidades_pdf",
+    "last_reviewed": "2026-01-06",
+    "notes": "Extraído automáticamente de PDF; revisar secciones con figuras/tablas no capturadas como texto."
+  }
+}

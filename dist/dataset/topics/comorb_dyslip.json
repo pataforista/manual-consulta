@@ -1,0 +1,103 @@
+{
+  "id": "comorb_dyslip",
+  "title": "Manejo de Dislipidemias",
+  "audience": "both",
+  "tags": ["comorbilidad", "metabolico", "cardiovascular"],
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Calculadora Rápida",
+      "audience": "clinician",
+      "sub_blocks": [
+        {
+          "type": "calculator",
+          "title": "Calcular LDL (Friedewald)",
+          "fn": "ldl_calc",
+          "inputs": [
+            { "key": "tc", "label": "Colesterol Total", "unit": "mg/dL" },
+            { "key": "hdl", "label": "HDL (Bueno)", "unit": "mg/dL" },
+            { "key": "tg", "label": "Triglicéridos", "unit": "mg/dL" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "id": "dyslip_criteria_ldl",
+      "title": "Metas y Diagnóstico: LDL",
+      "audience": "clinician",
+      "headers": ["Rango (mg/dL)", "Interpretación"],
+      "rows": [
+        { "range": "<100", "status": "Óptimo" },
+        { "range": "130-160", "status": "Límite" },
+        { "range": "160-190", "status": "Alto" },
+        { "range": ">190", "status": "Muy alto" }
+      ]
+    },
+    {
+      "type": "table",
+      "id": "dyslip_criteria_tg",
+      "title": "Triglicéridos",
+      "audience": "clinician",
+      "headers": ["Rango (mg/dL)", "Interpretación"],
+      "rows": [
+        { "range": "<150", "status": "Normal" },
+        { "range": "150-199", "status": "Leve" },
+        { "range": "200-500", "status": "Moderado" },
+        { "range": ">500", "status": "Severo" }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "dyslip_tx_statins",
+      "title": "Tratamiento con Estatinas",
+      "audience": "clinician",
+      "content": "Seleccionar dosis basada en riesgo cardiovascular.",
+      "sub_blocks": [
+        {
+          "type": "key_value",
+          "title": "Moderada Intensidad",
+          "data": { "Rosuvastatina": "5-10 mg", "Atorvastatina": "10-20 mg" }
+        },
+        {
+          "type": "key_value",
+          "title": "Alta Intensidad",
+          "data": { "Rosuvastatina": "20-40 mg", "Atorvastatina": "40-80 mg" }
+        }
+      ]
+    },
+    {
+      "type": "warning",
+      "title": "Seguridad y Fibratos",
+      "level": "critical",
+      "audience": "clinician",
+      "content": "Riesgo de miositis al combinar. Si Triglicéridos >500 mg/dL, agregar fibrato. Preferir FENOFIBRATO."
+    },
+    {
+      "type": "section",
+      "title": "Información para el Paciente",
+      "audience": "both",
+      "content": "Guía básica para entender el colesterol.",
+      "sub_blocks": [
+        {
+          "type": "text",
+          "title": "¿Qué es el Colesterol?",
+          "content": "Es una grasa en la sangre. \n\n🔴 **LDL (Malo):** Tapa las arterias. Queremos que esté BAJO.\n🟢 **HDL (Bueno):** Limpia las arterias. Queremos que esté ALTO."
+        },
+        {
+          "type": "checklist",
+          "title": "Metas de estilo de vida",
+          "items": [
+            "Reducir consumo de grasas animales y frituras.",
+            "Aumentar consumo de fibra (avena, nopal, verduras).",
+            "Realizar 30 minutos de caminata diaria."
+          ]
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "source": "manual_local_comorbilidades",
+    "version": "2.1_w_calc"
+  }
+}

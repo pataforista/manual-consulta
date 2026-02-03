@@ -1,0 +1,91 @@
+{
+  "id": "lifestyle_anxiety",
+  "title": "Manejo de Crisis: Habilidades TIPP",
+  "audience": "both",
+  "tags": ["lifestyle", "anxiety", "salud_mental", "dbt", "crisis"],
+  "blocks": [
+    {
+      "id": "anxiety_clinical_alert",
+      "type": "alert",
+      "title": "Diagnóstico Diferencial",
+      "level": "warning",
+      "audience": "clinician",
+      "content": "Antes de asumir etiología psicógena, descartar: Hipertiroidismo, Arritmias, Consumo de estimulantes o Abstinencia."
+    },
+    {
+      "id": "tipp_intro",
+      "type": "section",
+      "title": "¿Qué es TIPP?",
+      "audience": "both",
+      "content": "Protocolo de emergencia para 'enfriar' el cerebro cuando las emociones son abrumadoras y no puede pensar con claridad.",
+      "sub_blocks": [
+        {
+          "id": "tipp_t_temperature",
+          "type": "key_value",
+          "title": "T - Temperatura (Cambio Brusco)",
+          "data": {
+            "Acción": "Sumergir la cara en agua helada o sostener hielos en las manos.",
+            "Efecto": "Activa el 'reflejo de inmersión' que baja la frecuencia cardíaca inmediatamente."
+          }
+        },
+        {
+          "id": "tipp_i_intensity",
+          "type": "key_value",
+          "title": "I - Intensidad (Ejercicio)",
+          "data": {
+            "Acción": "20 minutos de ejercicio intenso o ráfagas breves (correr, saltos, sentadillas).",
+            "Efecto": "Quema el exceso de cortisol y adrenalina acumulado."
+          }
+        },
+        {
+          "id": "tipp_p_paced",
+          "type": "key_value",
+          "title": "P - Respiración Pausada",
+          "data": {
+            "Técnica": "Respiración en Caja (4x4x4x4)",
+            "Instrucción": "Inhale 4s, Retenga 4s, Exhale 4s, Pausa 4s. Repita hasta calmarse."
+          }
+        },
+        {
+          "id": "tipp_p_paired",
+          "type": "key_value",
+          "title": "P - Relajación Muscular Progresiva",
+          "data": {
+            "Acción": "Tense fuertemente un grupo muscular (ej. puños/hombros) por 5 segundos.",
+            "Soltar": "Suelte de golpe y note la diferencia. Repita con piernas, cara, abdomen."
+          }
+        }
+      ]
+    },
+    {
+      "id": "anxiety_prevention_checklist",
+      "type": "checklist",
+      "title": "Kit de Prevención",
+      "audience": "both",
+      "items": [
+        "Identifique sus 'disparadores' (triggers).",
+        "Tenga hielos siempre listos en el congelador.",
+        "Practique la respiración en caja cuando NO tenga ansiedad (para dominarla).",
+        "Reduzca estimulantes (café, bebidas energéticas)."
+      ]
+    },
+    {
+      "id": "anxiety_writing_tool",
+      "type": "section",
+      "title": "Herramienta de Descarga",
+      "audience": "both",
+      "sub_blocks": [
+        {
+          "id": "writing_exercise",
+          "type": "text",
+          "title": "Escritura Libre",
+          "content": "Si su mente no para: Tome papel y lápiz. Escriba sin parar todo lo que pasa por su cabeza durante 3 minutos. No corrija, no lea. Al terminar, rompa el papel."
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "source": "manual_local_comorbilidades + DBT_Skills_Manual",
+    "version": "2.2_tipp_complete"
+  }
+}
