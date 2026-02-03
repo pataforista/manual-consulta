@@ -1,0 +1,90 @@
+{
+  "id": "lifestyle_sleep",
+  "title": "Higiene del Sueño e Insomnio",
+  "audience": "both",
+  "tags": ["lifestyle", "sleep", "insomnio", "salud_mental"],
+  "blocks": [
+    {
+      "id": "sleep_calc_section",
+      "type": "section",
+      "title": "Calculadora de Calidad",
+      "audience": "both",
+      "content": "¿Realmente descansa? Calcule su eficiencia de sueño.",
+      "sub_blocks": [
+        {
+          "id": "calc_sleep_efficiency",
+          "type": "calculator",
+          "title": "Eficiencia del Sueño",
+          "fn": "sleep_eff",
+          "inputs": [
+            { "key": "bed_time", "label": "Tiempo total en cama (horas)", "unit": "h" },
+            { "key": "sleep_time", "label": "Tiempo real durmiendo (horas)", "unit": "h" }
+          ],
+          "share_variant": {
+            "title": "No pase tiempo despierto en cama",
+            "content": "Si su eficiencia es baja (<85%), pasar más tiempo en la cama solo empeorará su insomnio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "sleep_golden_rules",
+      "type": "section",
+      "title": "Reglas de Oro (Control de Estímulos)",
+      "audience": "both",
+      "content": "Para que su cerebro vuelva a asociar la Cama = Dormir.",
+      "sub_blocks": [
+        {
+          "id": "sleep_rules_kv",
+          "type": "key_value",
+          "title": "Lo Básico",
+          "data": {
+            "Horario Fijo": "Levántese siempre a la misma hora (incluso fines de semana).",
+            "Solo Dormir": "La cama es SOLO para dormir y actividad sexual. No TV, no celular, no comer.",
+            "Siestas": "Prohibidas (o máximo 20 min antes de las 3 PM)."
+          }
+        },
+        {
+          "id": "sleep_15min_rule",
+          "type": "alert",
+          "level": "warning",
+          "title": "La Regla de los 15 Minutos",
+          "content": "Si no logra dormirse en aprox. 15-20 minutos:\n\n1. **SALGA DE LA CAMA.**\n2. Vaya a otro cuarto con luz tenue.\n3. Haga algo aburrido (leer algo técnico, doblar ropa).\n4. Regrese a la cama SOLO cuando tenga mucho sueño.\n\n*Quedarse en la cama dando vueltas entrena al cerebro para estar despierto.*"
+        }
+      ]
+    },
+    {
+      "id": "sleep_environment_checklist",
+      "type": "checklist",
+      "title": "Checklist del Entorno",
+      "items": [
+        "Oscuridad total (use cortinas black-out o antifaz).",
+        "Temperatura fresca (el calor fragmenta el sueño).",
+        "Reloj oculto: No mire la hora si se despierta en la madrugada.",
+        "Celular lejos: La luz azul suprime la melatonina (hormona del sueño)."
+      ]
+    },
+    {
+      "id": "sleep_diet_habits",
+      "type": "checklist",
+      "title": "Alimentación y Rutina",
+      "items": [
+        "Cena ligera 2 horas antes de acostarse (evite grasas e irritantes).",
+        "No tome líquidos 1 hora antes (para no ir al baño en la noche).",
+        "Cafeína: Evite café, té o refrescos de cola después de las 4:00 PM.",
+        "Alcohol: Evítelo. Ayuda a dormir rápido, pero provoca despertares en la madrugada."
+      ]
+    },
+    {
+      "id": "sleep_printable_link",
+      "type": "printable_ref",
+      "title": "Material para llevar a casa",
+      "audience": "both",
+      "printable_id": "sleep_hygiene_checklist_a4"
+    }
+  ],
+  "meta": {
+    "source": "manual_local_comorbilidades + CBT-I Guidelines",
+    "version": "2.2_interactive_efficiency"
+  }
+}

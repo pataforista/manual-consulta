@@ -1,0 +1,113 @@
+{
+  "id": "comorb_hypothy",
+  "title": "Manejo de Hipotiroidismo",
+  "audience": "both",
+  "tags": ["endocrino", "tiroides", "farmacología"],
+  "blocks": [
+    {
+      "id": "hypo_calc_section",
+      "type": "section",
+      "title": "Calculadora de Inicio (Sustitución Plena)",
+      "audience": "clinician",
+      "sub_blocks": [
+        {
+          "id": "hypo_calc_dose",
+          "type": "calculator",
+          "title": "Dosis por Peso (1.6 mcg/kg)",
+          "fn": "levo_dose",
+          "inputs": [
+            { "key": "weight", "label": "Peso del Paciente", "unit": "kg" }
+          ],
+          "share_variant": {
+             "title": "Su medicamento",
+             "content": "La levotiroxina reemplaza la hormona que su tiroides no está produciendo."
+          }
+        }
+      ]
+    },
+    {
+      "id": "hypo_diagnosis",
+      "type": "table",
+      "title": "Diagnóstico y Perfil",
+      "audience": "clinician",
+      "headers": ["Condición", "Perfil Hormonal"],
+      "rows": [
+        { "condition": "Hipotiroidismo Primario", "profile": "TSH ↑ Elevada + T4L ↓ Baja" },
+        { "condition": "Hipo. Subclínico", "profile": "TSH ↑ (>10 mUI/L) + T4L Normal" },
+        { "condition": "Hipo. Central", "profile": "TSH ↓ Baja o Normal + T4L ↓ Baja" }
+      ]
+    },
+    {
+      "id": "hypo_treatment_algo",
+      "type": "section",
+      "title": "Inicio de Tratamiento",
+      "audience": "clinician",
+      "content": "Ajustar dosis según edad y comorbilidades.",
+      "sub_blocks": [
+        {
+          "id": "hypo_tx_healthy",
+          "type": "text",
+          "title": "Adulto Sano (<60 años)",
+          "content": "Iniciar con dosis plena calculada (1.6 mcg/kg). Control en 6-8 semanas."
+        },
+        {
+          "id": "hypo_tx_elderly",
+          "type": "alert",
+          "level": "warning",
+          "title": "Adulto Mayor o Cardiópata",
+          "content": "¡Iniciar despacio! Dosis baja: 12.5 a 25 mcg/día. Subir gradualmente cada 2-4 semanas según tolerancia."
+        }
+      ]
+    },
+    {
+      "id": "hypo_goals",
+      "type": "table",
+      "title": "Metas de TSH",
+      "audience": "clinician",
+      "headers": ["Población", "Meta TSH (mUI/L)"],
+      "rows": [
+        { "group": "General", "target": "0.4 - 4.0" },
+        { "group": "Adulto Mayor (>70)", "target": "4.0 - 6.0 (Más laxo)" },
+        { "group": "Embarazo (1er Trim)", "target": "< 2.5" }
+      ]
+    },
+    {
+      "id": "hypo_interactions",
+      "type": "alert",
+      "level": "danger",
+      "title": "Interacciones Importantes",
+      "audience": "clinician",
+      "content": "La absorción disminuye con: Calcio, Hierro, Omeprazol, Café y Alimentos. Separar al menos 4 horas de suplementos."
+    },
+    {
+      "id": "hypo_patient_edu",
+      "type": "section",
+      "title": "Instrucciones para el Paciente",
+      "audience": "both",
+      "sub_blocks": [
+        {
+          "id": "hypo_how_to_take",
+          "type": "checklist",
+          "title": "Forma correcta de tomar Levotiroxina",
+          "items": [
+            "Tómela en ayunas, solo con agua simple.",
+            "Espere 30 a 60 minutos antes de desayunar o tomar café.",
+            "Si toma calcio o hierro, hágalo en la comida o cena (lejos de la pastilla).",
+            "No cambie de marca sin avisar a su médico."
+          ]
+        },
+        {
+          "id": "hypo_symptoms",
+          "type": "text",
+          "title": "¿Cuándo me sentiré mejor?",
+          "content": "Los síntomas (cansancio, frío, piel seca) mejoran lentamente. Tarda de 2 a 4 semanas en notar cambios. No suspenda el medicamento."
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "source": "manual_local_comorbilidades",
+    "version": "2.2_completed",
+    "notes": "Se han agregado algoritmos de dosis estándar y educación al paciente."
+  }
+}

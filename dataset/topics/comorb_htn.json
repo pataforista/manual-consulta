@@ -1,0 +1,108 @@
+{
+  "id": "comorb_htn",
+  "title": "Manejo de Hipertensión Arterial (HAS)",
+  "audience": "both",
+  "tags": ["cardiovascular", "crónico", "urgencias"],
+  "blocks": [
+    {
+      "type": "section",
+      "title": "Calculadora Clínica",
+      "audience": "clinician",
+      "sub_blocks": [
+        {
+          "type": "calculator",
+          "title": "Presión Arterial Media (PAM)",
+          "fn": "map_calc",
+          "inputs": [
+            { "key": "sys", "label": "Sistólica", "unit": "mmHg" },
+            { "key": "dia", "label": "Diastólica", "unit": "mmHg" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "alert",
+      "title": "🚨 Crisis Hipertensiva",
+      "level": "critical",
+      "audience": "clinician",
+      "content": "Si PA > 180/120 mmHg:\n- Sin daño a órgano blanco: Urgencia (Bajar gradualmente).\n- Con daño (SNC, Corazón, Riñón): EMERGENCIA (Referir a 2do nivel inmediato)."
+    },
+    {
+      "type": "section",
+      "id": "htn_diagnosis",
+      "title": "Criterios Diagnósticos",
+      "audience": "clinician",
+      "sub_blocks": [
+        {
+          "type": "key_value",
+          "title": "Definiciones",
+          "data": {
+            "Consultorio": "> 140/90 mmHg",
+            "Casa (Promedio)": "> 130/80 mmHg",
+            "MAPA (24h)": "> 130/80 mmHg"
+          }
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "id": "htn_goals",
+      "title": "Metas Terapéuticas",
+      "audience": "clinician",
+      "headers": ["Población", "Meta"],
+      "rows": [
+        { "group": "General (<65 años)", "target": "<130/80 mmHg" },
+        { "group": "Adulto Mayor (>65 años)", "target": "<140/90 mmHg" },
+        { "group": "Diabéticos / Renal", "target": "<130/80 mmHg" }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Tratamiento Escalonado",
+      "audience": "clinician",
+      "sub_blocks": [
+        {
+          "type": "text",
+          "content": "1. **Terapia Dual (Inicio):** IECA/ARA2 + Calcio Antagonista (o Diurético).\n2. **Monoterapia:** Solo en bajo riesgo, estadio 1 o ancianos frágiles."
+        },
+        {
+          "type": "alert",
+          "level": "warning",
+          "content": "Nunca combinar IECA + ARA2 (Daño renal)."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Para el Paciente",
+      "audience": "both",
+      "sub_blocks": [
+        {
+          "type": "checklist",
+          "title": "Signos de Alarma (Ir a Urgencias)",
+          "items": [
+            "Dolor de pecho fuerte u opresivo.",
+            "Dolor de cabeza muy intenso y repentino.",
+            "Visión borrosa o ver 'lucesitas'.",
+            "Dificultad para hablar o mover un brazo."
+          ]
+        },
+        {
+          "type": "text",
+          "title": "Consejos Clave",
+          "content": "• Reduzca la sal (evite enlatados y embutidos).\n• Tome sus medicamentos aunque se sienta bien (la presión alta no duele hasta que es grave)."
+        },
+        {
+          "type": "resource_link",
+          "id": "htn_tools",
+          "link_id": "bp_log_a4",
+          "label": "🖨️ Imprimir Hoja de Registro de Presión"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "source": "manual_local_comorbilidades",
+    "version": "2.2_interactive"
+  }
+}
