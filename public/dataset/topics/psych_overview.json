@@ -1,0 +1,127 @@
+{
+    "id": "psych_overview",
+    "title": "Evaluación psiquiátrica inicial",
+    "audience": "clinician",
+    "tags": [
+        "evaluacion",
+        "entrevista",
+        "seguridad"
+    ],
+    "blocks": [
+        {
+            "id": "psych_overview_intro",
+            "type": "alert",
+            "title": "Objetivo clínico",
+            "level": "info",
+            "audience": "clinician",
+            "content": "Esta guía resume puntos de evaluación y seguridad para consulta psiquiátrica. No sustituye protocolos locales ni juicio clínico."
+        },
+        {
+            "id": "psych_overview_structure",
+            "type": "section",
+            "title": "Estructura de la evaluación",
+            "audience": "clinician",
+            "content": "Organice la consulta en bloques breves para asegurar diagnóstico, seguridad y plan terapéutico.",
+            "sub_blocks": [
+                {
+                    "id": "psych_overview_steps",
+                    "type": "checklist",
+                    "title": "Checklist de entrevista",
+                    "audience": "clinician",
+                    "items": [
+                        "Motivo de consulta, curso temporal y factores precipitantes.",
+                        "Antecedentes psiquiátricos, tratamientos previos y respuesta.",
+                        "Consumo de sustancias (alcohol, cannabis, estimulantes, benzodiacepinas, opioides).",
+                        "Antecedentes médicos, neurológicos, fármacos y alergias.",
+                        "Exploración del estado mental (apariencia, afecto, pensamiento, percepción, juicio).",
+                        "Riesgo suicida/heteroagresivo y factores protectores.",
+                        "Impacto funcional, red de apoyo, violencia o vulnerabilidad social.",
+                        "Plan con diagnóstico diferencial, metas de tratamiento y seguimiento."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "psych_overview_triage",
+            "type": "section",
+            "title": "Triage de seguridad",
+            "audience": "clinician",
+            "content": "Priorice la identificación de riesgo agudo.",
+            "sub_blocks": [
+                {
+                    "id": "psych_overview_red_flags",
+                    "type": "alert",
+                    "title": "Señales de alarma (referir/contener de inmediato)",
+                    "level": "danger",
+                    "audience": "clinician",
+                    "content": "Ideación suicida con plan e intención, intento reciente, psicosis con mando imperativo, intoxicación/abstinencia grave, catatonia, agitación grave o incapacidad para cuidado básico."
+                }
+            ]
+        },
+        {
+            "id": "psych_overview_tools",
+            "type": "section",
+            "title": "Herramientas para el paciente",
+            "audience": "clinician",
+            "content": "Imprimibles útiles para la consulta.",
+            "sub_blocks": [
+                {
+                    "id": "psych_overview_print_sleep",
+                    "type": "resource_link",
+                    "audience": "clinician",
+                    "link_id": "sleep_hygiene_checklist_a4",
+                    "label": "🖨️ Checklist de higiene del sueño"
+                },
+                {
+                    "id": "psych_overview_print_safety",
+                    "type": "resource_link",
+                    "audience": "clinician",
+                    "link_id": "safety_plan_a4",
+                    "label": "🖨️ Plan de seguridad en crisis"
+                },
+                {
+                    "id": "psych_overview_print_meds",
+                    "type": "resource_link",
+                    "audience": "clinician",
+                    "link_id": "medication_log_a4",
+                    "label": "🖨️ Registro de medicación"
+                },
+                {
+                    "id": "psych_overview_print_guide",
+                    "type": "resource_link",
+                    "audience": "clinician",
+                    "link_id": "patient_psychoeducation_guide",
+                    "label": "🖨️ Guía breve para pacientes y familias"
+                }
+            ]
+        },
+        {
+            "id": "psych_overview_guidelines",
+            "type": "resource_list",
+            "title": "Guías clínicas recomendadas",
+            "audience": "clinician",
+            "items": [
+                {
+                    "name": "WHO mhGAP Intervention Guide",
+                    "link": "https://www.who.int/publications/i/item/9789241549790",
+                    "description": "Guía internacional para trastornos mentales, neurológicos y por uso de sustancias."
+                },
+                {
+                    "name": "NICE Guideline NG222 (Depression in adults)",
+                    "link": "https://www.nice.org.uk/guidance/ng222",
+                    "description": "Recomendaciones actuales para depresión en adultos."
+                },
+                {
+                    "name": "CENETEC México - Guías de Práctica Clínica en Salud Mental",
+                    "link": "https://www.gob.mx/cenetec/acciones-y-programas/guias-de-practica-clinica",
+                    "description": "Repositorio nacional de guías mexicanas."
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "source": "guias_internacionales_y_nacionales",
+        "last_reviewed": "2026-01-06",
+        "notes": "Resumen para apoyo clínico; verificar protocolos institucionales."
+    }
+}

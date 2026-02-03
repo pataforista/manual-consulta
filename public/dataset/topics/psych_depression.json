@@ -1,0 +1,23 @@
+{
+    "id": "psych_depression",
+    "title": "Trastorno depresivo mayor",
+    "audience": "clinician",
+    "tags": [
+        "depresion",
+        "diagnostico",
+        "tratamiento"
+    ],
+    "blocks": [
+        {
+            "id": "psych_depression_intro",
+            "type": "section",
+            "title": "Evaluación",
+            "audience": "clinician",
+            "content": "Placeholder: Evaluación del trastorno depresivo mayor. (Contenido pendiente de completar)."
+        }
+    ],
+    "meta": {
+        "source": "placeholder",
+        "last_reviewed": "2026-01-06"
+    }
+}

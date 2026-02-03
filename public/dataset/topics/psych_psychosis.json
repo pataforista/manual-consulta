@@ -1,0 +1,99 @@
+{
+    "id": "psych_psychosis",
+    "title": "Psicosis y esquizofrenia",
+    "audience": "clinician",
+    "tags": [
+        "psicosis",
+        "esquizofrenia",
+        "primer_episodio"
+    ],
+    "blocks": [
+        {
+            "id": "psych_psychosis_eval",
+            "type": "section",
+            "title": "Evaluación inicial",
+            "audience": "clinician",
+            "content": "Investigue duración, consumo de sustancias, causas médicas y neurológicas."
+        },
+        {
+            "id": "psych_psychosis_red_flags",
+            "type": "alert",
+            "title": "Señales de alarma",
+            "level": "danger",
+            "audience": "clinician",
+            "content": "Agitación severa, riesgo de violencia, delirium, catatonia o psicosis con comandos peligrosos requieren manejo urgente."
+        },
+        {
+            "id": "psych_psychosis_treatment",
+            "type": "section",
+            "title": "Tratamiento general",
+            "audience": "clinician",
+            "content": "Combine antipsicóticos con intervenciones psicosociales y seguimiento cercano.",
+            "sub_blocks": [
+                {
+                    "id": "psych_psychosis_recs",
+                    "type": "list",
+                    "title": "Recomendaciones basadas en guías",
+                    "audience": "clinician",
+                    "items": [
+                        "Primer episodio: iniciar antipsicótico a dosis bajas y titular según respuesta.",
+                        "Evaluar adherencia, efectos adversos y necesidades psicosociales.",
+                        "Considerar clozapina tras falta de respuesta a 2 antipsicóticos adecuados.",
+                        "Monitorizar parámetros metabólicos y neurológicos de forma regular."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "psych_psychosis_printables",
+            "type": "section",
+            "title": "Material para el paciente",
+            "audience": "clinician",
+            "content": "Apoye la adherencia y comprensión del tratamiento.",
+            "sub_blocks": [
+                {
+                    "id": "psych_psychosis_print_meds",
+                    "type": "resource_link",
+                    "audience": "clinician",
+                    "link_id": "medication_log_a4",
+                    "label": "🖨️ Registro de medicación"
+                },
+                {
+                    "id": "psych_psychosis_print_guide",
+                    "type": "resource_link",
+                    "audience": "clinician",
+                    "link_id": "patient_psychoeducation_guide",
+                    "label": "🖨️ Guía breve para pacientes y familias"
+                }
+            ]
+        },
+        {
+            "id": "psych_psychosis_guidelines",
+            "type": "resource_list",
+            "title": "Guías clínicas recomendadas",
+            "audience": "clinician",
+            "items": [
+                {
+                    "name": "NICE CG178: Psychosis and schizophrenia in adults",
+                    "link": "https://www.nice.org.uk/guidance/cg178",
+                    "description": "Guía internacional para evaluación y manejo."
+                },
+                {
+                    "name": "APA Practice Guideline for the Treatment of Patients With Schizophrenia (2020)",
+                    "link": "https://psychiatryonline.org/doi/book/10.1176/appi.books.9780890424841",
+                    "description": "Guía basada en evidencia de la APA."
+                },
+                {
+                    "name": "CENETEC México: Esquizofrenia",
+                    "link": "https://www.gob.mx/cenetec/acciones-y-programas/guias-de-practica-clinica",
+                    "description": "Consultar la guía nacional vigente."
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "source": "guias_internacionales_y_nacionales",
+        "last_reviewed": "2026-01-06",
+        "notes": "Confirmar protocolos de uso de clozapina y monitoreo."
+    }
+}

@@ -9,7 +9,7 @@ export function renderHome(dataset, mode) {
   return `
     <header>
       <div class="row" style="justify-content:space-between">
-        <h1>Manual Comorbilidades</h1>
+        <h1>Manual de Psiquiatría</h1>
         <button id="modeToggle" class="btn ${mode === 'patient' ? 'primary' : ''}">
           ${mode === 'clinician' ? '👨‍⚕️ Modo Médico' : '👤 Modo Paciente'}
         </button>
@@ -17,34 +17,34 @@ export function renderHome(dataset, mode) {
     </header>
     <main>
       <p class="welcome-text">
-        ${mode === 'clinician' ? 'Seleccione un tema clínico:' : 'Guías informativas para su salud:'}
+        ${mode === 'clinician' ? 'Seleccione un tema clínico:' : 'Material informativo para pacientes:'}
       </p>
       
       <div class="grid-menu">
         ${topicsList.map(ref => {
-          // Buscamos el contenido real en topicsById para sacar el icono o titulo real
-          const topicData = dataset.topicsById[ref.id];
-          if(!topicData) return ''; // Si falló la carga de este topic, no lo mostramos
+    // Buscamos el contenido real en topicsById para sacar el icono o titulo real
+    const topicData = dataset.topicsById[ref.id];
+    if (!topicData) return ''; // Si falló la carga de este topic, no lo mostramos
 
-          // Filtro simple: Si es modo paciente y el tema es SOLO clinico, lo ocultamos
-          if (mode === 'patient' && topicData.audience === 'clinician') return '';
+    // Filtro simple: Si es modo paciente y el tema es SOLO clinico, lo ocultamos
+    if (mode === 'patient' && topicData.audience === 'clinician') return '';
 
-          return `
+    return `
           <div class="card clickable" data-nav="topic" data-id="${ref.id}">
             <div class="row" style="align-items: flex-start;">
                 <div class="topic-icon">📄</div>
                 <div style="flex:1">
                     <h2 style="margin-bottom:4px">${topicData.title}</h2>
                     <div class="row" style="gap:4px; margin-bottom:6px">
-                        ${(topicData.tags || []).slice(0,3).map(tag => 
-                            `<span class="badge" style="font-size:10px; background:#eee; padding:2px 6px; border-radius:4px; color:#555;">${tag}</span>`
-                        ).join('')}
+                        ${(topicData.tags || []).slice(0, 3).map(tag =>
+      `<span class="badge" style="font-size:10px; background:#eee; padding:2px 6px; border-radius:4px; color:#555;">${tag}</span>`
+    ).join('')}
                     </div>
                 </div>
             </div>
           </div>
           `;
-        }).join('')}
+  }).join('')}
       </div>
     </main>
     
@@ -62,7 +62,7 @@ export function renderHome(dataset, mode) {
 export function renderTopic(dataset, id, mode) {
   // Búsqueda directa por ID (O(1)) gracias a tu nueva estructura
   const topic = dataset.topicsById[id];
-  
+
   if (!topic) return `<main><div class="card warn danger">Error: Tema "${id}" no encontrado o no cargó correctamente.</div><button class="btn" data-nav="home">Volver</button></main>`;
 
   return `
@@ -86,11 +86,11 @@ export function renderTopic(dataset, id, mode) {
 // --- VISTA: IMPRIMIBLE ---
 export function renderPrintable(dataset, id) {
   const item = dataset.printablesById?.[id];
-  if(!item) return `<main>Imprimible no encontrado</main>`;
+  if (!item) return `<main>Imprimible no encontrado</main>`;
 
   // 1. Caso PDF
-  if(item.template === 'pdf' || item.url) {
-     return `
+  if (item.template === 'pdf' || item.url) {
+    return `
       <div style="height:100vh; display:flex; flex-direction:column;">
         <header class="no-print" style="padding:10px; background:#eee; display:flex; gap:10px;">
             <button class="btn" data-nav="home">Cerrar</button>
@@ -103,7 +103,7 @@ export function renderPrintable(dataset, id) {
   }
 
   // 2. Caso Guía / Checklist (NUEVO: Para tu hoja maestra)
-  if(item.template === 'guide_checklist') {
+  if (item.template === 'guide_checklist') {
     return `
       <div class="printable-sheet" style="padding:40px; max-width:800px; margin:0 auto; font-family:sans-serif;">
         <div class="no-print" style="margin-bottom:20px;">
@@ -133,7 +133,7 @@ export function renderPrintable(dataset, id) {
   }
 
   // 3. Caso Tabla (Log de Presión, etc.)
-  if(item.headers) {
+  if (item.headers) {
     const rows = Array(15).fill('');
     return `
       <div class="printable-sheet" style="padding:20px;">

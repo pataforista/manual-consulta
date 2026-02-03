@@ -1,0 +1,107 @@
+{
+    "id": "psych_suicide_risk",
+    "title": "Riesgo suicida y crisis",
+    "audience": "clinician",
+    "tags": [
+        "suicidio",
+        "crisis",
+        "seguridad"
+    ],
+    "blocks": [
+        {
+            "id": "psych_suicide_intro",
+            "type": "alert",
+            "title": "Prioridad clínica",
+            "level": "danger",
+            "audience": "clinician",
+            "content": "Toda mención de suicidio requiere evaluación estructurada, documentación clara y un plan de seguridad."
+        },
+        {
+            "id": "psych_suicide_assessment",
+            "type": "section",
+            "title": "Evaluación del riesgo",
+            "audience": "clinician",
+            "content": "Evalúe ideas, intención, plan, medios disponibles, factores protectores y riesgo inminente.",
+            "sub_blocks": [
+                {
+                    "id": "psych_suicide_questions",
+                    "type": "checklist",
+                    "title": "Preguntas clave",
+                    "audience": "clinician",
+                    "items": [
+                        "¿Ha pensado en morir o hacerse daño?",
+                        "¿Tiene un plan específico? ¿Qué tan letal es?",
+                        "¿Tiene acceso a medios?",
+                        "¿Ha habido intentos previos?",
+                        "¿Qué lo/la mantiene a salvo hoy?"
+                    ]
+                },
+                {
+                    "id": "psych_suicide_red_flags",
+                    "type": "alert",
+                    "title": "Indicadores de alto riesgo",
+                    "level": "danger",
+                    "audience": "clinician",
+                    "content": "Intento reciente, plan activo, intoxicación, psicosis, desesperanza marcada, falta de apoyo o incapacidad para garantizar seguridad."
+                }
+            ]
+        },
+        {
+            "id": "psych_suicide_actions",
+            "type": "section",
+            "title": "Acciones inmediatas",
+            "audience": "clinician",
+            "content": "Asegure contención y reducción de medios; coordine red de apoyo y referencias.",
+            "sub_blocks": [
+                {
+                    "id": "psych_suicide_steps",
+                    "type": "checklist",
+                    "title": "Plan mínimo de seguridad",
+                    "audience": "clinician",
+                    "items": [
+                        "No dejar solo/a si hay riesgo alto.",
+                        "Retirar o limitar acceso a medios letales.",
+                        "Acordar contacto con red de apoyo.",
+                        "Derivación urgente a urgencias/psiquiatría si riesgo inminente.",
+                        "Documentar evaluación y decisiones clínicas."
+                    ]
+                },
+                {
+                    "id": "psych_suicide_print_plan",
+                    "type": "resource_link",
+                    "audience": "clinician",
+                    "link_id": "safety_plan_a4",
+                    "label": "🖨️ Imprimir plan de seguridad"
+                }
+            ]
+        },
+        {
+            "id": "psych_suicide_guidelines",
+            "type": "resource_list",
+            "title": "Guías clínicas recomendadas",
+            "audience": "clinician",
+            "items": [
+                {
+                    "name": "NICE NG225: Self-harm (2022)",
+                    "link": "https://www.nice.org.uk/guidance/ng225",
+                    "description": "Evaluación y manejo del autolesionismo y prevención de recurrencia."
+                },
+                {
+                    "name": "WHO: Preventing suicide (2019)",
+                    "link": "https://www.who.int/publications/i/item/9789241564779",
+                    "description": "Recomendaciones internacionales de prevención."
+                },
+                {
+                    "name": "CENETEC México: Guías de suicidio y conducta autolesiva",
+                    "link": "https://www.gob.mx/cenetec/acciones-y-programas/guias-de-practica-clinica",
+                    "description": "Buscar guías nacionales vigentes según población objetivo."
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "source": "guias_internacionales_y_nacionales",
+        "last_reviewed": "2026-01-06",
+        "notes": "Usar protocolos locales de urgencias y seguridad."
+    }
+}
