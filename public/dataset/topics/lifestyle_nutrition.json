@@ -1,34 +1,58 @@
 {
   "id": "lifestyle_nutrition",
-  "title": "Alimentación",
+  "title": "Alimentación Saludable",
   "audience": "both",
   "tags": [
     "lifestyle",
-    "nutrition"
+    "estilo de vida",
+    "dieta",
+    "milpa"
   ],
   "blocks": [
     {
-      "type": "text",
-      "id": "lifestyle_nutrition_intro",
-      "title": "Alimentación",
-      "audience": "both",
-      "content": "-  Dieta de la milpa \n-  Plato del bien comer  \n-  Grupos de alimentos \nRecursos para pacientes abajo!!!! \n \n \n3 \n4 \n \n \n5"
+      "id": "nutrition_milpa",
+      "type": "section",
+      "title": "La Dieta de la Milpa",
+      "content": "Modelo de alimentación saludable basado en la cultura y biodiversidad mexicana. Es una dieta mesoamericana, saludable y sustentable.",
+      "items": [
+        "Maíz: Fuente de energía y fibra.",
+        "Frijol: Proteína vegetal y hierro.",
+        "Calabaza: Vitaminas y antioxidantes.",
+        "Chile: Mejora la digestión y aporta vitamina C."
+      ]
     },
     {
-      "type": "checklist",
-      "id": "lifestyle_nutrition_points",
-      "title": "Puntos prácticos",
-      "audience": "both",
+      "id": "nutrition_plate",
+      "type": "section",
+      "title": "El Plato del Bien Comer",
+      "content": "Guía de alimentación para la población mexicana que facilita la identificación de los tres grupos de alimentos:",
+      "sub_blocks": [
+        {
+          "type": "list",
+          "title": "Grupos de Alimentos",
+          "items": [
+            "🟢 Verduras y Frutas: Principal fuente de vitaminas, minerales y fibra.",
+            "🟡 Cereales y Tubérculos: Principal fuente de energía.",
+            "🔴 Leguminosas y Alimentos de Origen Animal: Principal fuente de proteínas."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nutrition_tips",
+      "type": "section",
+      "title": "Recomendaciones Prácticas",
       "items": [
-        "Dieta de la milpa",
-        "Plato del bien comer",
-        "Grupos de alimentos"
+        "Realiza 3 comidas principales y 2 refrigerios al día.",
+        "Elige agua simple potable en lugar de bebidas azucaradas.",
+        "Prefiere alimentos naturales sobre los ultraprocesados.",
+        "Reduce el consumo de sal y grasas saturadas."
       ]
     }
   ],
   "meta": {
-    "source": "manual_de_consulta_comorbilidades_pdf",
-    "last_reviewed": "2026-01-06",
-    "notes": "Extraído automáticamente de PDF; revisar secciones con figuras/tablas no capturadas como texto."
+    "source": "Secretaría de Salud México",
+    "version": "1.1",
+    "last_reviewed": "2026-02-04"
   }
 }

@@ -12,6 +12,9 @@ h2{font-size:16px; margin:0 0 8px;}
 small{color:#555;}
 ul{margin:6px 0 0 18px;}
 hr{border:none; border-top:1px solid #eee; margin:10px 0;}
+.search-container{margin:15px 0;}
+.search-input{width:100%; box-sizing:border-box; padding:12px 15px; border-radius:12px; border:1px solid #ddd; font-size:16px; outline:none;}
+.search-input:focus{border-color:#0066cc; box-shadow:0 0 0 2px rgba(0,104,204,0.1);}
 .kv{display:flex; gap:10px; flex-wrap:wrap;}
 .kv input{padding:8px; border-radius:10px; border:1px solid #ddd; width:140px;}
 .badge{font-size:12px; padding:2px 8px; border:1px solid #ddd; border-radius:999px; background:#fff;}

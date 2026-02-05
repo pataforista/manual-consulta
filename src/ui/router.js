@@ -19,6 +19,10 @@ export function renderHome(dataset, mode) {
       <p class="welcome-text">
         ${mode === 'clinician' ? 'Seleccione un tema clínico:' : 'Material informativo para pacientes:'}
       </p>
+
+      <div class="search-container no-print">
+        <input type="text" id="topicSearch" placeholder="🔍 Buscar tema, fármaco o etiqueta..." class="search-input">
+      </div>
       
       <div class="grid-menu">
         ${topicsList.map(ref => {

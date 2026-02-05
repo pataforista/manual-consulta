@@ -68,6 +68,23 @@ function wireHandlers() {
     };
   }
 
+  // Buscador de temas
+  const searchInput = document.getElementById("topicSearch");
+  if (searchInput) {
+    searchInput.oninput = () => {
+      const query = searchInput.value.toLowerCase();
+      document.querySelectorAll(".grid-menu .card").forEach(card => {
+        const title = card.querySelector("h2").textContent.toLowerCase();
+        const tags = Array.from(card.querySelectorAll(".badge")).map(b => b.textContent.toLowerCase()).join(" ");
+        if (title.includes(query) || tags.includes(query)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    };
+  }
+
   // Modal "Compartir / Ver para paciente"
   document.querySelectorAll("[data-share]").forEach(btn => {
     btn.onclick = () => {
