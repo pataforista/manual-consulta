@@ -88,6 +88,17 @@
       ]
     },
     {
+      "id": "psych_adherence",
+      "title": "Adherencia Terapéutica y Alianza",
+      "path": "dataset/topics/psych_adherence.json",
+      "audience": "clinician",
+      "tags": [
+        "tratamiento",
+        "adherencia",
+        "alianza"
+      ]
+    },
+    {
       "id": "psych_med_monitoring",
       "title": "Monitoreo de psicofármacos",
       "path": "dataset/topics/psych_med_monitoring.json",
@@ -205,6 +216,16 @@
       ]
     },
     {
+      "id": "comorb_masld",
+      "title": "Hígado Graso (MASLD/MASH)",
+      "path": "dataset/topics/comorb_masld.json",
+      "audience": "both",
+      "tags": [
+        "hepatico",
+        "metabolico"
+      ]
+    },
+    {
       "id": "comorb_hypothy",
       "title": "Manejo de Hipotiroidismo",
       "path": "dataset/topics/comorb_hypothy.json",
@@ -246,7 +267,7 @@
     },
     {
       "id": "lifestyle_sleep",
-      "title": "Higiene del Sueño e Insomnio",
+      "title": "Higiene del Sueño e Insomnio: Guía para el Médico",
       "path": "dataset/topics/lifestyle_sleep.json",
       "audience": "both",
       "tags": [
@@ -256,7 +277,7 @@
     },
     {
       "id": "lifestyle_anxiety",
-      "title": "Manejo de Crisis (TIPP)",
+      "title": "Habilidades TIP (DBT) - Módulo de Crisis",
       "path": "dataset/topics/lifestyle_anxiety.json",
       "audience": "both",
       "tags": [
