@@ -143,6 +143,17 @@
       ]
     },
     {
+      "id": "psych_constipation",
+      "title": "Estreñimiento Inducido por Fármacos",
+      "path": "dataset/topics/psych_constipation.json",
+      "audience": "both",
+      "tags": [
+        "efectos-secundarios",
+        "gastrointestinal",
+        "seguridad"
+      ]
+    },
+    {
       "id": "psych_antipsychotic_systems_monitoring",
       "title": "Monitoreo sistémico en tratamiento con antipsicóticos",
       "path": "dataset/topics/psych_antipsychotic_systems_monitoring.json",
@@ -271,6 +282,17 @@
       "tags": [
         "rutina",
         "social"
+      ]
+    },
+    {
+      "id": "prevent_cancer",
+      "title": "Prevención y Tamizaje de Cáncer",
+      "path": "dataset/topics/prevent_cancer.json",
+      "audience": "both",
+      "tags": [
+        "cancer",
+        "prevencion",
+        "oncologia"
       ]
     }
   ],
