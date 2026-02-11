@@ -19,7 +19,8 @@
       "tags": [
         "evaluacion",
         "entrevista",
-        "residentes"
+        "seguridad",
+        "urgencias"
       ]
     },
     {
@@ -30,7 +31,8 @@
       "tags": [
         "urgencias",
         "seguridad",
-        "crisis"
+        "crisis",
+        "suicidio"
       ]
     },
     {
@@ -57,11 +59,13 @@
     },
     {
       "id": "psych_psychosis",
-      "title": "Psicosis y esquizofrenia",
+      "title": "Psicosis, agitación y esquizofrenia",
       "path": "dataset/topics/psych_psychosis.json",
       "audience": "clinician",
       "tags": [
         "psicosis",
+        "agitación",
+        "urgencias",
         "esquizofrenia"
       ]
     },
@@ -106,7 +110,8 @@
       "tags": [
         "farmacos",
         "seguridad",
-        "monitoreo"
+        "monitoreo",
+        "metabolico"
       ]
     },
     {

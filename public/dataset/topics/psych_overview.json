@@ -5,23 +5,70 @@
     "tags": [
         "evaluacion",
         "entrevista",
-        "seguridad"
+        "seguridad",
+        "urgencias"
     ],
     "blocks": [
         {
             "id": "psych_overview_intro",
             "type": "alert",
-            "title": "Objetivo clínico",
+            "title": "Marco de uso y supuesto operativo",
             "level": "info",
             "audience": "clinician",
-            "content": "Esta guía resume puntos de evaluación y seguridad para consulta psiquiátrica. No sustituye protocolos locales ni juicio clínico."
+            "content": "Material diseñado para entornos clínicos reales (urgencias y consulta externa) como apoyo estandarizado. No sustituye protocolos locales ni juicio clínico. Principio rector: primero seguridad médica y ambiental, luego psiquiatría (alineado con Project BETA)."
+        },
+        {
+            "id": "psych_overview_scope",
+            "type": "checklist",
+            "title": "Declarar al inicio de la atención",
+            "audience": "clinician",
+            "items": [
+                "Población: adulto o adolescente (si adolescente, activar bloque de tutores, consentimiento y clínica de adolescentes).",
+                "Contexto: urgencias hospitalarias vs consulta ambulatoria.",
+                "Exclusiones/precauciones: intoxicación, abstinencia, embarazo, comorbilidad médica grave, deterioro cognitivo o delirium.",
+                "Objetivo primario: reducir eventos adversos por riesgo suicida, agitación/psicosis, iatrogenia farmacológica y discontinuidad asistencial."
+            ]
+        },
+        {
+            "id": "psych_overview_clearance",
+            "type": "section",
+            "title": "Capa universal de seguridad (SIEMPRE en urgencias)",
+            "audience": "clinician",
+            "content": "Antes de etiquetar \"psiquiátrico\", complete triage médico mínimo y seguridad ambiental.",
+            "sub_blocks": [
+                {
+                    "id": "psych_overview_clearance_check",
+                    "type": "checklist",
+                    "title": "0.1 Medical clearance (60–120 segundos)",
+                    "audience": "clinician",
+                    "items": [
+                        "Descartar delirium/encefalopatía: fluctuación, inatención, desorientación.",
+                        "Verificar hipoxia, hipoglucemia, fiebre o sepsis.",
+                        "Identificar intoxicación o abstinencia (alcohol, benzodiacepinas, estimulantes, cannabis, opioides).",
+                        "Buscar trauma craneal, convulsiones o causa neurológica aguda.",
+                        "Descartar síndromes iatrogénicos: NMS/serotoninérgico, anticolinérgico y akatisia severa.",
+                        "Si hay causa médica probable o inestabilidad: priorizar ruta médica and solicitar psiquiatría cuando sea evaluable."
+                    ]
+                },
+                {
+                    "id": "psych_overview_env_safety",
+                    "type": "checklist",
+                    "title": "0.2 Seguridad ambiental breve",
+                    "audience": "clinician",
+                    "items": [
+                        "Retiro de objetos de riesgo, observación definida, control de accesos and ruta de salida.",
+                        "Asignar roles del equipo and mantener tono de interacción no confrontativo.",
+                        "Registro mínimo obligatorio: riesgo identificado, medidas ambientales and alternativas menos restrictivas intentadas."
+                    ]
+                }
+            ]
         },
         {
             "id": "psych_overview_structure",
             "type": "section",
             "title": "Estructura de la evaluación",
             "audience": "clinician",
-            "content": "Organice la consulta en bloques breves para asegurar diagnóstico, seguridad y plan terapéutico.",
+            "content": "Organice la consulta en bloques breves para asegurar diagnóstico, seguridad and plan terapéutico.",
             "sub_blocks": [
                 {
                     "id": "psych_overview_steps",
@@ -29,32 +76,87 @@
                     "title": "Checklist de entrevista",
                     "audience": "clinician",
                     "items": [
-                        "Motivo de consulta, curso temporal y factores precipitantes.",
-                        "Antecedentes psiquiátricos, tratamientos previos y respuesta.",
+                        "Motivo de consulta, curso temporal and factores precipitantes.",
+                        "Antecedentes psiquiátricos, tratamientos previos and respuesta.",
                         "Consumo de sustancias (alcohol, cannabis, estimulantes, benzodiacepinas, opioides).",
-                        "Antecedentes médicos, neurológicos, fármacos y alergias.",
+                        "Antecedentes médicos, neurológicos, fármacos and alergias.",
                         "Exploración del estado mental (apariencia, afecto, pensamiento, percepción, juicio).",
-                        "Riesgo suicida/heteroagresivo y factores protectores.",
+                        "Riesgo suicida/heteroagresivo and factores protectores.",
                         "Impacto funcional, red de apoyo, violencia o vulnerabilidad social.",
-                        "Plan con diagnóstico diferencial, metas de tratamiento y seguimiento."
+                        "Plan con diagnóstico diferencial, metas de tratamiento and seguimiento."
                     ]
                 }
             ]
         },
         {
-            "id": "psych_overview_triage",
+            "id": "psych_overview_followup_templates",
             "type": "section",
-            "title": "Triage de seguridad",
+            "title": "Plantillas operativas de seguimiento por visita",
             "audience": "clinician",
-            "content": "Priorice la identificación de riesgo agudo.",
+            "content": "Use plantillas breves para continuidad entre urgencias and consulta externa.",
             "sub_blocks": [
                 {
-                    "id": "psych_overview_red_flags",
-                    "type": "alert",
-                    "title": "Señales de alarma (referir/contener de inmediato)",
-                    "level": "danger",
+                    "id": "psych_overview_first_visit",
+                    "type": "checklist",
+                    "title": "Primera consulta",
                     "audience": "clinician",
-                    "content": "Ideación suicida con plan e intención, intento reciente, psicosis con mando imperativo, intoxicación/abstinencia grave, catatonia, agitación grave o incapacidad para cuidado básico."
+                    "items": [
+                        "Síntomas diana (2–3) and funcionamiento.",
+                        "Riesgo suicidio/violencia/autocuidado: sí/no + nota breve.",
+                        "Diagnóstico de trabajo + diferenciales críticos.",
+                        "Inicio/ajuste terapéutico con objetivo and efectos adversos a vigilar.",
+                        "Monitoreo: lo que toca hoy (labs/ECG) + fecha objetivo.",
+                        "Educación 60 s + señales de alarma."
+                    ]
+                },
+                {
+                    "id": "psych_overview_2to4weeks",
+                    "type": "checklist",
+                    "title": "Control 2–4 semanas",
+                    "audience": "clinician",
+                    "items": [
+                        "Respuesta clínica: mejor/igual/peor con ejemplo.",
+                        "Adherencia and barreras.",
+                        "Efectos adversos tempranos (akatisia, sedación, GI, etc.).",
+                        "Ajuste terapéutico con razón explícita.",
+                        "Confirmar que se completó monitoreo basal."
+                    ]
+                },
+                {
+                    "id": "psych_overview_quarterly",
+                    "type": "checklist",
+                    "title": "Control trimestral / mantenimiento",
+                    "audience": "clinician",
+                    "items": [
+                        "Recaídas, SUD, sueño and funcionamiento.",
+                        "Monitoreo metabólico/cardiovascular según fármacos.",
+                        "Prevención secundaria: vacunación, tabaquismo, salud sexual, dolor crónico, OSA/ronquido, ERC.",
+                        "Reforzar educación 60 s and señales de alarma."
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "psych_overview_cross_modules",
+            "type": "section",
+            "title": "Capas transversales por comorbilidad (activar por gatillos)",
+            "audience": "clinician",
+            "content": "Integre módulos breves cuando aparezcan gatillos clínicos para evitar omisiones.",
+            "sub_blocks": [
+                {
+                    "id": "psych_overview_comorb_triggers",
+                    "type": "checklist",
+                    "title": "Gatillos mínimos",
+                    "audience": "clinician",
+                    "items": [
+                        "ERC: creatinina/eGFR alterados o riesgo alto (edad, HTA, DM2, litio/valproato/NSAIDs).",
+                        "OSA: somnolencia diurna, ronquido, obesidad, HTA resistente o uso de sedantes.",
+                        "Tabaquismo: evaluar siempre (impacta adherencia and metabolismo de fármacos).",
+                        "Dolor crónico: eleva riesgo depresivo/suicida and altera sueño/función.",
+                        "Salud sexual and reproductiva: síntomas por prolactina/sedación and anticoncepción/embarazo cuando aplique.",
+                        "SUD (alcohol, estimulantes, cannabis): módulo obligatorio por impacto en urgencias, psicosis and adherencia.",
+                        "Metabólico activo: obesidad, DM2, HTA o dislipidemia deben nombrarse como problema clínico."
+                    ]
                 }
             ]
         },
@@ -91,7 +193,7 @@
                     "type": "resource_link",
                     "audience": "clinician",
                     "link_id": "patient_psychoeducation_guide",
-                    "label": "🖨️ Guía breve para pacientes y familias"
+                    "label": "🖨️ Guía breve para pacientes and familias"
                 }
             ]
         },
@@ -102,14 +204,14 @@
             "audience": "clinician",
             "items": [
                 {
-                    "name": "WHO mhGAP Intervention Guide",
-                    "link": "https://www.who.int/publications/i/item/9789241549790",
-                    "description": "Guía internacional para trastornos mentales, neurológicos y por uso de sustancias."
+                    "name": "American Association for Emergency Psychiatry - Project BETA",
+                    "link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3298219/",
+                    "description": "Principios de evaluación and manejo de agitación en urgencias psiquiátricas."
                 },
                 {
-                    "name": "NICE Guideline NG222 (Depression in adults)",
-                    "link": "https://www.nice.org.uk/guidance/ng222",
-                    "description": "Recomendaciones actuales para depresión en adultos."
+                    "name": "NOM-004-SSA3-2012 (Expediente clínico)",
+                    "link": "https://www.dof.gob.mx/nota_detalle.php?codigo=5272787&fecha=15/10/2012",
+                    "description": "Elementos mínimos de documentación and continuidad asistencial."
                 },
                 {
                     "name": "CENETEC México - Guías de Práctica Clínica en Salud Mental",
@@ -120,8 +222,8 @@
         }
     ],
     "meta": {
-        "source": "guias_internacionales_y_nacionales",
-        "last_reviewed": "2026-01-06",
-        "notes": "Resumen para apoyo clínico; verificar protocolos institucionales."
+        "source": "integracion_operativa_urgencias_y_consulta",
+        "last_reviewed": "2026-02-11",
+        "notes": "Marco operativo para seguridad clínica and continuidad; ajustar a protocolos institucionales."
     }
 }
