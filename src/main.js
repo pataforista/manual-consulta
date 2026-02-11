@@ -71,18 +71,33 @@ function wireHandlers() {
   // Buscador de temas
   const searchInput = document.getElementById("topicSearch");
   if (searchInput) {
-    searchInput.oninput = () => {
-      const query = searchInput.value.toLowerCase();
-      document.querySelectorAll(".grid-menu .card").forEach(card => {
-        const title = card.querySelector("h2").textContent.toLowerCase();
+    const countEl = document.getElementById("topicSearchCount");
+    const emptyEl = document.getElementById("topicSearchEmpty");
+    const cards = Array.from(document.querySelectorAll(".grid-menu .topic-card"));
+
+    const syncSearchState = () => {
+      const query = searchInput.value.trim().toLowerCase();
+      let visible = 0;
+
+      cards.forEach(card => {
+        const title = card.querySelector("h2")?.textContent?.toLowerCase() || "";
         const tags = Array.from(card.querySelectorAll(".badge")).map(b => b.textContent.toLowerCase()).join(" ");
-        if (title.includes(query) || tags.includes(query)) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
+        const match = !query || title.includes(query) || tags.includes(query);
+        card.style.display = match ? "block" : "none";
+        if (match) visible += 1;
       });
+
+      if (countEl) {
+        countEl.textContent = query
+          ? `${visible} tema${visible === 1 ? "" : "s"} encontrado${visible === 1 ? "" : "s"}`
+          : `${visible} tema${visible === 1 ? "" : "s"} disponible${visible === 1 ? "" : "s"}`;
+      }
+
+      if (emptyEl) emptyEl.style.display = visible === 0 ? "block" : "none";
     };
+
+    searchInput.oninput = syncSearchState;
+    syncSearchState();
   }
 
   // Modal "Compartir / Ver para paciente"
