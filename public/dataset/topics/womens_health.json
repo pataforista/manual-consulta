@@ -49,11 +49,13 @@
                     ]
                 },
                 {
-                    "type": "list",
-                    "title": "Prevención",
+                    "type": "checklist",
+                    "title": "Prevención e Intervenciones Clave",
                     "items": [
-                        "**Vacunación VPH:** Fundamental antes del inicio de vida sexual (beneficio hasta los 26 años).",
-                        "**Anticoncepción:** No negar métodos por edad. Los de larga duración (LARC: implantes, DIU) son altamente efectivos. Promover la 'doble protección' (+ condón)."
+                        "Vacunación VPH: Fundamental antes del inicio de vida sexual (beneficio hasta los 26 años).",
+                        "Inicio Rápido (Quick Start): Si hay certeza razonable de no embarazo, iniciar anticoncepción el mismo día. Aumenta efectividad en adolescentes.",
+                        "Cribado Opt-out: Recomendar pruebas de ITS de forma rutinaria a menos que se rechacen explícitamente.",
+                        "Anticoncepción LARC: Implantes y DIU son altamente efectivos. Promover la 'doble protección' (+ condón)."
                     ]
                 }
             ]
@@ -61,41 +63,82 @@
         {
             "id": "wh_reproductive",
             "type": "section",
-            "title": "2. Edad Reproductiva: Salud Preconcepcional y General",
+            "title": "2. Edad Reproductiva: Salud Integral y Planificación",
             "audience": "clinician",
-            "content": "Abarca prevención de embarazos no planeados, atención obstétrica y patologías benignas.",
+            "content": "Abarca desde la preconcepción hasta el manejo avanzado de anticoncepción y salud sexual.",
             "sub_blocks": [
                 {
-                    "type": "text",
-                    "title": "Atención Preconcepcional",
-                    "content": "Idealmente 6-12 meses antes del embarazo. Suplementar con Ácido Fólico (0.4 mg/día bajo riesgo, 5 mg/día alto riesgo) 3 meses antes. Controlar crónicos (HbA1c < 6.5%, cambio de IECA/ARA II por alfametildopa/labetalol)."
-                },
-                {
-                    "type": "checklist",
-                    "title": "Control Prenatal y Postparto",
+                    "type": "accordion",
+                    "title": "Consejería: Toma de Decisiones Compartida (SDM)",
                     "items": [
-                        "Iniciar antes de la semana 14. Mínimo 5 controles (OMS), ideal 10.",
-                        "Tamizajes: Bacteriuria asintomática (urocultivo), sífilis, VIH, diabetes gestacional (sem 24-28) y preeclampsia.",
-                        "Postparto: Vigilar depresión, lactancia y anticoncepción inmediata."
+                        {
+                            "title": "Cambio de Paradigma",
+                            "content": "La autonomía de la paciente es prioridad. No asuma que la eficacia es el único valor; considere control de sangrado, ausencia de hormonas o retorno a la fertilidad."
+                        },
+                        {
+                            "title": "Modelo PHI CARE",
+                            "content": "1. **P**ast (experiencias), 2. **H**ealth (historia/MEC), 3. **I**mportance (prioridad), 4. **C**ounsel (alinear opciones), 5. **A**utonomy (respetar decisión), 6. **R**eview (uso), 7. **E**xperience (validar cambios)."
+                        },
+                        {
+                            "title": "Comunicación de Riesgos",
+                            "content": "Use frecuencias naturales (ej. '9 de cada 100 mujeres') en lugar de porcentajes abstractos o Índice de Pearl."
+                        }
                     ]
                 },
                 {
                     "type": "accordion",
-                    "title": "Patologías Ginecológicas Frecuentes",
+                    "title": "Actualizaciones de Seguridad (MEC 2024-2025)",
                     "items": [
                         {
-                            "title": "SOP (Criterios Rotterdam)",
-                            "content": "2 de 3 (oligo/anovulación, hiperandrogenismo, ovarios poliquísticos). Diagnóstico de exclusión. Manejo: Estilo de vida, ACOs, Metformina si hay resistencia a insulina."
+                            "title": "Enfermedad Renal (ERC)",
+                            "content": "En hemodiálisis o diálisis peritoneal, los hormonales combinados (AHC) son **Categoría 4** (riesgo inaceptable). Preferir DIU de cobre, implante o DIU-LNG."
                         },
                         {
-                            "title": "Miomatosis",
-                            "content": "50% asintomáticas. Referir si hay hemorragia, anemia, dolor pélvico o crecimiento rápido."
+                            "title": "Obesidad e IMC ≥ 30",
+                            "content": "La AE (LNG o UPA) puede tener eficacia reducida (MEC 2). El Gold Standard para AE en obesidad es el **DIU de cobre**."
                         },
                         {
-                            "title": "ITS",
-                            "content": "Tamizaje VIH/Sífilis anual según riesgo. Tratar vaginosis, candidiasis y tricomoniasis (pareja obligatoria)."
+                            "title": "Cáncer de Mama",
+                            "content": "Cáncer actual: Todos los hormonales son **Categoría 4**. Si han pasado >5 años sin enfermedad, bajan a **Categoría 3** (preferir DIU de cobre)."
                         }
                     ]
+                },
+                {
+                    "type": "accordion",
+                    "title": "Manejo de Procedimientos y Efectos",
+                    "items": [
+                        {
+                            "title": "Dolor en Inserción de DIU",
+                            "content": "Se recomienda **lidocaína paracervical** o tópica. No se recomienda misoprostol de rutina."
+                        },
+                        {
+                            "title": "Sangrado con Implantes",
+                            "content": "Curso corto (5-7 días) de AINEs (ibuprofeno) o AHC temporales para estabilizar el endometrio ante sangrado molesto."
+                        }
+                    ]
+                },
+                {
+                    "type": "accordion",
+                    "title": "Salud Sexual y Prevención ITS",
+                    "items": [
+                        {
+                            "title": "Doxy-PEP",
+                            "content": "Doxiciclina 200mg (dosis única) post-coital (dentro de 72h) para reducir sífilis/clamidia en poblaciones de alto riesgo."
+                        },
+                        {
+                            "title": "Tratamiento Gonorrea",
+                            "content": "**Ceftriaxona 500mg IM** es el estándar. Si no se descartó Clamidia, añadir Doxiciclina (la azitromicina ya no es primera línea dual)."
+                        },
+                        {
+                            "title": "Población Trans/NB",
+                            "content": "Use lenguaje inclusivo ('personas con útero'). No asuma que la testosterona es anticonceptiva. Documente nombre elegido y pronombres."
+                        }
+                    ]
+                },
+                {
+                    "type": "text",
+                    "title": "Atención Preconcepcional y Prenatal",
+                    "content": "Suplementación con Ácido Fólico (<0.4mg o 5mg 3 meses antes). Control prenatal: Iniciar <sem 14, mín 5 controles, ideal 10. Tamizaje VIH/Sífilis/Diabetes/Preeclampsia."
                 }
             ]
         },
@@ -195,6 +238,10 @@
                         {
                             "title": "Esquemas",
                             "content": "- Con útero: Estrógeno + Progestágeno ( micronizada o didrogesterona preferida).\n- Sin útero: Solo estrógenos.\n- Vía Transdérmica: Preferida en obesidad, HTA, riesgo de trombosis o tabaquismo."
+                        },
+                        {
+                            "title": "Perimenopausia / Mirena",
+                            "content": "Mantener anticoncepción hasta 1 año de amenorrea (si >50a). El **DIU-LNG 52mg** (ej. Mirena) es ideal para 'doble protección' (anticoncepción + protección endometrial). Duración extendida a **8 años**."
                         },
                         {
                             "title": "S. Genitourinario (SGM)",
