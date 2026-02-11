@@ -93,7 +93,7 @@
     },
     {
       "id": "psych_adherence",
-      "title": "Adherencia Terapéutica y Alianza",
+      "title": "Adherencia terapéutica y alianza",
       "path": "dataset/topics/psych_adherence.json",
       "audience": "clinician",
       "tags": [
@@ -160,7 +160,7 @@
     },
     {
       "id": "psych_constipation",
-      "title": "Estreñimiento Inducido por Fármacos",
+      "title": "Estreñimiento inducido por fármacos",
       "path": "dataset/topics/psych_constipation.json",
       "audience": "both",
       "tags": [

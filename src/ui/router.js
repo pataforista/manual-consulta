@@ -21,7 +21,8 @@ export function renderHome(dataset, mode) {
       </p>
 
       <div class="search-container no-print">
-        <input type="text" id="topicSearch" placeholder="🔍 Buscar tema, fármaco o etiqueta..." class="search-input">
+        <input type="search" id="topicSearch" placeholder="🔍 Buscar tema, fármaco o etiqueta..." class="search-input" aria-label="Buscar temas">
+        <small id="topicSearchCount" class="search-count"></small>
       </div>
       
       <div class="grid-menu">
@@ -34,7 +35,7 @@ export function renderHome(dataset, mode) {
     if (mode === 'patient' && topicData.audience === 'clinician') return '';
 
     return `
-          <div class="card clickable" data-nav="topic" data-id="${ref.id}">
+          <button class="card clickable topic-card" data-nav="topic" data-id="${ref.id}" type="button" aria-label="Abrir tema: ${topicData.title}">
             <div class="row" style="align-items: flex-start;">
                 <div class="topic-icon">📄</div>
                 <div style="flex:1">
@@ -46,10 +47,11 @@ export function renderHome(dataset, mode) {
                     </div>
                 </div>
             </div>
-          </div>
+          </button>
           `;
   }).join('')}
       </div>
+      <div id="topicSearchEmpty" class="card" style="display:none; text-align:center;">No se encontraron temas para esta búsqueda.</div>
     </main>
     
     <div id="shareOverlay" class="overlay" style="display:none;">
