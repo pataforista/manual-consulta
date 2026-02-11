@@ -315,6 +315,18 @@
         "prevencion",
         "oncologia"
       ]
+    },
+    {
+      "id": "womens_health",
+      "title": "Salud de la Mujer",
+      "path": "dataset/topics/womens_health.json",
+      "audience": "clinician",
+      "tags": [
+        "ginecologia",
+        "obstetricia",
+        "prevencion",
+        "menopausia"
+      ]
     }
   ],
   "printables": [
