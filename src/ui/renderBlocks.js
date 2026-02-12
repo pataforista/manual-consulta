@@ -164,5 +164,20 @@ function renderBlock(dataset, b, mode){
     </ul></div>`;
   }
 
+  if(type==="flowchart"){
+    const steps = b.steps || [];
+    return `<div class="card">${title}
+      <div class="flowchart">
+        ${steps.map((step, idx)=>`<div class="flow-step ${levelClass(step.level)}">
+          <div class="flow-index">${idx + 1}</div>
+          <div>
+            <div class="flow-title">${esc(step.title || `Paso ${idx + 1}`)}</div>
+            <small>${esc(step.content || "")}</small>
+          </div>
+        </div>`).join("")}
+      </div>
+    </div>`;
+  }
+
   return `<div class="card"><p>Bloque no soportado: ${esc(type)}</p></div>`;
 }

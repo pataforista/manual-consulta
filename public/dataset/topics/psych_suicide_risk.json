@@ -15,7 +15,15 @@
             "title": "Prioridad clínica",
             "level": "danger",
             "audience": "clinician",
-            "content": "Toda mención de suicidio requiere algoritmo decisión-acción, documentación mínima obligatoria and plan de seguridad incluso si se hospitaliza."
+            "content": "Toda mención de suicidio requiere algoritmo decisión-acción, documentación mínima obligatoria y plan de seguridad incluso si se hospitaliza."
+        },
+        {
+            "id": "psych_suicide_use_guardrail",
+            "type": "warning",
+            "level": "danger",
+            "title": "Advertencia de uso clínico",
+            "audience": "clinician",
+            "content": "Esta guía apoya la toma de decisiones del equipo tratante. No debe usarse por pacientes de forma autónoma ni reemplaza la valoración presencial en crisis."
         },
         {
             "id": "psych_suicide_step1",
@@ -45,7 +53,35 @@
                     "title": "Salida operativa",
                     "level": "warning",
                     "audience": "clinician",
-                    "content": "Si hay riesgo agudo no indicar \"solo seguimiento\": pasar a Paso 2A. Si no hay riesgo agudo, continuar con Paso 2B and seguimiento estrecho."
+                    "content": "Si hay riesgo agudo no indicar \"solo seguimiento\": pasar a Paso 2A. Si no hay riesgo agudo, continuar con Paso 2B y seguimiento estrecho."
+                }
+            ]
+        },
+        {
+            "id": "psych_suicide_visual_algorithm",
+            "type": "flowchart",
+            "title": "Algoritmo visual decisión-acción",
+            "audience": "clinician",
+            "steps": [
+                {
+                    "title": "Detectar señal de alarma",
+                    "content": "Toda mención de suicidio activa evaluación inmediata y documentada.",
+                    "level": "danger"
+                },
+                {
+                    "title": "Clasificar riesgo agudo",
+                    "content": "Plan/intención, medios disponibles, intoxicación, psicosis y capacidad de autocontrol.",
+                    "level": "caution"
+                },
+                {
+                    "title": "Si riesgo agudo: contención y derivación",
+                    "content": "Priorizar seguridad, limitar medios y definir hospitalización/derivación según contexto.",
+                    "level": "danger"
+                },
+                {
+                    "title": "Si no agudo: plan de seguridad completo",
+                    "content": "Intervenciones breves, restricción de medios y seguimiento en 72 h–1 semana.",
+                    "level": "info"
                 }
             ]
         },
@@ -54,7 +90,7 @@
             "type": "section",
             "title": "Paso 2A — Manejo inmediato del riesgo agudo",
             "audience": "clinician",
-            "content": "Objetivo: contención, evaluación estructurada and continuidad segura.",
+            "content": "Objetivo: contención, evaluación estructurada y continuidad segura.",
             "sub_blocks": [
                 {
                     "id": "psych_suicide_step2a_actions",
@@ -62,8 +98,8 @@
                     "title": "Acciones clínicas",
                     "audience": "clinician",
                     "items": [
-                        "Contención ambiental inmediata: observación, retiro de medios and acompañamiento.",
-                        "Evaluación estructurada: precipitantes, intención, medios, intentos previos, SUD, psicosis, depresión and dolor.",
+                        "Contención ambiental inmediata: observación, retiro de medios y acompañamiento.",
+                        "Evaluación estructurada: precipitantes, intención, medios, intentos previos, SUD, psicosis, depresión y dolor.",
                         "Definir derivación/hospitalización cuando el riesgo no sea manejable en forma ambulatoria.",
                         "Completar plan de seguridad breve aun en contexto de hospitalización."
                     ]
@@ -75,7 +111,7 @@
             "type": "section",
             "title": "Paso 2B — Manejo cuando NO hay riesgo agudo",
             "audience": "clinician",
-            "content": "El objetivo es reducir recurrencia and asegurar continuidad temprana.",
+            "content": "El objetivo es reducir recurrencia y asegurar continuidad temprana.",
             "sub_blocks": [
                 {
                     "id": "psych_suicide_step2b_actions",
@@ -98,7 +134,7 @@
             "items": [
                 "Señales de alerta personales (\"cuando empiezo a…\").",
                 "Estrategias internas (3).",
-                "Personas/lugares para distraer and desactivar crisis (2).",
+                "Personas/lugares para distraer y desactivar crisis (2).",
                 "Contactos de apoyo (2) + cómo pedir ayuda.",
                 "Profesionales/servicios de contacto (urgencias, clínica, líneas).",
                 "Medidas para reducir acceso a medios (responsable + acción concreta)."
@@ -111,9 +147,9 @@
             "audience": "clinician",
             "items": [
                 "Riesgo agudo sí/no + motivo.",
-                "Medios and acceso.",
+                "Medios y acceso.",
                 "Intervenciones realizadas.",
-                "Plan de seguridad (aunque sea breve) and seguimiento definido."
+                "Plan de seguridad (aunque sea breve) y seguimiento definido."
             ]
         },
         {
@@ -132,12 +168,12 @@
                 {
                     "name": "NICE NG225: Self-harm (2022)",
                     "link": "https://www.nice.org.uk/guidance/ng225",
-                    "description": "Evitar sustituir evaluación clínica por escalas and asegurar continuidad tras autolesión."
+                    "description": "Evitar sustituir evaluación clínica por escalas y asegurar continuidad tras autolesión."
                 },
                 {
-                    "name": "VA/DoD Clinical Practice Guideline: Assessment and Management of Patients at Risk for Suicide",
+                    "name": "VA/DoD Clinical Practice Guideline: Assessment y Management of Patients at Risk for Suicide",
                     "link": "https://www.healthquality.va.gov/guidelines/MH/srb/",
-                    "description": "Marco de gestión del riesgo con continuidad and plan de seguridad accionable."
+                    "description": "Marco de gestión del riesgo con continuidad y plan de seguridad accionable."
                 },
                 {
                     "name": "WHO: Preventing suicide (2019)",
@@ -148,8 +184,8 @@
         }
     ],
     "meta": {
-        "source": "algoritmo_decision_accion_riesgo_suicida",
+        "source": "NICE NG225 + VA/DoD CPG Suicide Risk + WHO 2019 (síntesis clínica)",
         "last_reviewed": "2026-02-11",
-        "notes": "Enfocar en manejo de riesgo and continuidad; no usar score aislado como destino clínico."
+        "notes": "Enfocar en manejo de riesgo y continuidad; no usar score aislado como destino clínico. Material para paciente solo mediante mediación clínica."
     }
 }

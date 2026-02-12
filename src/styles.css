@@ -64,3 +64,13 @@ button.card{font:inherit; color:inherit;}
 @media (max-width:640px){
   .grid-menu{grid-template-columns:1fr;}
 }
+
+
+.flowchart{display:grid; gap:10px; margin-top:6px;}
+.flow-step{display:grid; grid-template-columns:30px 1fr; gap:10px; align-items:start; border:1px solid #e6e6e6; border-radius:10px; padding:10px; position:relative;}
+.flow-step:not(:last-child)::after{content:"↓"; position:absolute; left:12px; bottom:-18px; color:#888; font-size:14px;}
+.flow-index{width:24px; height:24px; border-radius:999px; background:#eef3fb; color:#124a9c; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;}
+.flow-title{font-weight:600; margin-bottom:2px;}
+.flow-step.info{border-left:4px solid #2f6db3;}
+.flow-step.caution{border-left:4px solid #b06b00;}
+.flow-step.danger{border-left:4px solid #b00020;}
