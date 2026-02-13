@@ -95,7 +95,7 @@ export function renderPrintable(dataset, id) {
   if (!item) return `<main>Imprimible no encontrado</main>`;
 
   // 1. Caso PDF
-  if (item.template === 'pdf' || item.url) {
+  if (item.template === 'pdf' || item.url?.toLowerCase().endsWith('.pdf')) {
     return `
       <div style="height:100vh; display:flex; flex-direction:column;">
         <header class="no-print" style="padding:10px; background:#eee; display:flex; gap:10px;">
@@ -106,6 +106,23 @@ export function renderPrintable(dataset, id) {
         <iframe id="pdfFrame" src="${item.url}" style="flex:1; border:none; width:100%;"></iframe>
       </div>
      `;
+  }
+
+  // 2. Caso Imagen (Infografías)
+  if (item.template === 'image') {
+    return `
+      <div class="infographic-viewer" style="min-height:100vh; display:flex; flex-direction:column; background:#f0f2f5;">
+        <header class="no-print" style="padding:10px; background:#fff; border-bottom:1px solid #ddd; display:flex; gap:10px; position:sticky; top:0; z-index:100;">
+            <button class="btn" data-nav="home">← Volver</button>
+            <button class="btn primary" onclick="window.print()">🖨️ Imprimir</button>
+            <a href="${item.url}" download="${item.id}" class="btn">💾 Descargar</a>
+            <span style="align-self:center; font-weight:bold; flex:1; text-align:center;">${item.title}</span>
+        </header>
+        <main style="flex:1; display:flex; align-items:flex-start; justify-content:center; padding:20px;">
+            <img src="${item.url}" alt="${item.title}" style="max-width:100%; height:auto; border-radius:8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); background:#fff;">
+        </main>
+      </div>
+    `;
   }
 
   // 2. Caso Guía / Checklist (NUEVO: Para tu hoja maestra)

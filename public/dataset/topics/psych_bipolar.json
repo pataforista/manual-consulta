@@ -76,6 +76,13 @@
                     "audience": "clinician",
                     "link_id": "sleep_hygiene_checklist_a4",
                     "label": "🖨️ Checklist de higiene del sueño"
+                },
+                {
+                    "id": "psych_bipolar_infographic",
+                    "type": "resource_link",
+                    "audience": "both",
+                    "link_id": "bipolar_termometro_image",
+                    "label": "📊 Ver Infografía: Termómetro del Ánimo"
                 }
             ]
         },
