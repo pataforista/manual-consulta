@@ -8,10 +8,11 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['dataset/**', 'icon-192x192.png', 'icon-512x512.png'],
       workbox: {
+        maximumFileSizeToCacheInBytes: 12 * 1024 * 1024,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,pdf,jpg,jpeg,webp}'],
         runtimeCaching: [
           {
-            urlPattern: ({ url }) => url.pathname.startsWith('/dataset/'),
+            urlPattern: ({ url }) => url.pathname.includes('/dataset/'),
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'dataset-cache',

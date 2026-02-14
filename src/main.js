@@ -2,6 +2,7 @@
 import { loadDataset } from "./engine/dataset.js";
 import { renderHome, renderTopic, renderPrintable, renderPrintables } from "./ui/router.js";
 import { initInstallPrompt } from "./ui/install.js";
+import "./ui/sw-register.js";
 
 const app = document.getElementById("app");
 
@@ -13,8 +14,6 @@ const state = {
   filterFavorites: false
 };
 
-// Iniciar lógica de instalación
-initInstallPrompt();
 
 function setMode(next) {
   state.mode = next;
@@ -217,6 +216,7 @@ window.addEventListener("popstate", route);
   try {
     state.dataset = await loadDataset();
     route();
+    initInstallPrompt();
   } catch (e) {
     app.innerHTML = `<div class="clinical-box danger" style="margin:20px"><span class="box-title">ERROR DE SISTEMA</span>${e.message}</div>`;
   }
