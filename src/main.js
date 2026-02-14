@@ -1,6 +1,6 @@
 // src/main.js
 import { loadDataset } from "./engine/dataset.js";
-import { renderHome, renderTopic, renderPrintable, renderPrintables } from "./ui/router.js";
+import { renderHome, renderTopic, renderPrintable, renderPrintables, renderSettings } from "./ui/router.js";
 import { initInstallPrompt } from "./ui/install.js";
 import "./ui/sw-register.js";
 
@@ -8,12 +8,36 @@ const app = document.getElementById("app");
 
 const state = {
   mode: localStorage.getItem("mode") || "clinician",
+  theme: localStorage.getItem("theme") || "light",
+  fontSize: localStorage.getItem("fontSize") || "medium",
   dataset: null,
   urgencyOnly: false,
   favorites: JSON.parse(localStorage.getItem("favorites") || "[]"),
   filterFavorites: false
 };
 
+function applySettings() {
+  document.documentElement.setAttribute("data-theme", state.theme);
+  document.body.className = `font-${state.fontSize}`;
+}
+
+function setTheme(theme) {
+  state.theme = theme;
+  localStorage.setItem("theme", theme);
+  applySettings();
+  route();
+}
+
+function setFontSize(size) {
+  state.fontSize = size;
+  localStorage.setItem("fontSize", size);
+  applySettings();
+  route();
+}
+
+// Attach to window for onclick handlers in router
+window.setTheme = setTheme;
+window.setFontSize = setFontSize;
 
 function setMode(next) {
   state.mode = next;
@@ -36,7 +60,6 @@ function route() {
   const view = url.searchParams.get("view") || "home";
   const id = url.searchParams.get("id");
 
-  // Persistencia de contexto clínico
   if (view === "topic" && id) {
     localStorage.setItem("lastTopic", id);
   }
@@ -49,10 +72,11 @@ function route() {
     app.innerHTML = renderPrintable(state.dataset, id);
   } else if (view === "printables") {
     app.innerHTML = renderPrintables(state.dataset);
+  } else if (view === "settings") {
+    app.innerHTML = renderSettings(state.dataset, state.mode, state);
   } else {
     app.innerHTML = renderHome(state.dataset, state.mode, state);
 
-    // Si hay un tema previo, podríamos mostrar una opción de "Continuar revisando"
     const lastId = localStorage.getItem("lastTopic");
     if (lastId && state.dataset.topicsById[lastId]) {
       const resumeBtn = document.getElementById("btnResume");
@@ -64,8 +88,8 @@ function route() {
     }
   }
   wireHandlers();
+  applySettings();
 
-  // Actualizar estado de la navegación inferior
   document.querySelectorAll(".nav-bottom .nav-item").forEach(btn => {
     if (btn.dataset.nav === view) {
       btn.classList.add("active");
@@ -83,9 +107,7 @@ function nav(view, id) {
   route();
 }
 
-
 function wireHandlers() {
-  // Navegación básica
   document.querySelectorAll("[data-nav]").forEach(btn => {
     btn.onclick = (e) => {
       e.stopPropagation();
@@ -93,7 +115,6 @@ function wireHandlers() {
     };
   });
 
-  // Toggle Modo Médico/Paciente
   const modeBtn = document.getElementById("modeToggle");
   if (modeBtn) {
     modeBtn.onclick = () => {
@@ -101,7 +122,6 @@ function wireHandlers() {
     };
   }
 
-  // Buscador de temas (Hero Search)
   const searchInput = document.getElementById("topicSearch");
   if (searchInput) {
     const cards = Array.from(document.querySelectorAll(".grid-menu .topic-card"));
@@ -118,7 +138,6 @@ function wireHandlers() {
 
         let match = !query || title.includes(query) || badges.some(b => b.includes(query));
 
-        // Filtro de urgencias persistente
         if (state.urgencyOnly && !isUrgent) match = false;
         if (state.filterFavorites && !state.favorites.includes(id)) match = false;
 
@@ -136,9 +155,7 @@ function wireHandlers() {
     if (urgenciasBtn) {
       urgenciasBtn.onclick = () => {
         state.urgencyOnly = !state.urgencyOnly;
-        urgenciasBtn.style.background = state.urgencyOnly ? "var(--danger-bg)" : "rgba(255,255,255,0.1)";
-        urgenciasBtn.style.color = state.urgencyOnly ? "var(--danger)" : "white";
-        syncSearchState();
+        route(); // Simple refresh to apply primary class
       };
     }
 
@@ -146,16 +163,13 @@ function wireHandlers() {
     if (favoritosBtn) {
       favoritosBtn.onclick = () => {
         state.filterFavorites = !state.filterFavorites;
-        favoritosBtn.style.background = state.filterFavorites ? "var(--info-bg)" : "rgba(255,255,255,0.1)";
-        favoritosBtn.style.color = state.filterFavorites ? "var(--info-blue)" : "white";
-        syncSearchState();
+        route();
       };
     }
 
     syncSearchState();
   }
 
-  // Handler para favorito en vista topic
   const favToggle = document.getElementById("favToggle");
   if (favToggle) {
     favToggle.onclick = () => {
@@ -164,14 +178,19 @@ function wireHandlers() {
     };
   }
 
-  // Settings placeholder
-  const settingsBtn = document.getElementById("btnSettings") || document.getElementById("btnTopicSettings");
-  if (settingsBtn) {
-    settingsBtn.onclick = () => alert("Ajustes: Próximamente podrá personalizar las fuentes y el tamaño de texto.");
-  }
+  // Settings Handlers (if view is settings)
+  const bThemeL = document.getElementById("btnThemeLight");
+  if (bThemeL) bThemeL.onclick = () => setTheme('light');
+  const bThemeD = document.getElementById("btnThemeDark");
+  if (bThemeD) bThemeD.onclick = () => setTheme('dark');
 
+  const bFontS = document.getElementById("btnFontSmall");
+  if (bFontS) bFontS.onclick = () => setFontSize('small');
+  const bFontM = document.getElementById("btnFontMedium");
+  if (bFontM) bFontM.onclick = () => setFontSize('medium');
+  const bFontL = document.getElementById("btnFontLarge");
+  if (bFontL) bFontL.onclick = () => setFontSize('large');
 
-  // Modal "Compartir / Ver para paciente"
   document.querySelectorAll("[data-share]").forEach(btn => {
     btn.onclick = () => {
       const overlay = document.getElementById("shareOverlay");
@@ -188,7 +207,6 @@ function wireHandlers() {
   const closeShare = document.getElementById("shareClose");
   if (closeShare) closeShare.onclick = () => document.getElementById("shareOverlay").style.display = "none";
 
-  // Calculadoras
   document.querySelectorAll("form[data-calc]").forEach(form => {
     form.oninput = () => {
       const fn = form.dataset.calc;
@@ -200,9 +218,9 @@ function wireHandlers() {
           const res = module.runCalculator(fn, inputs);
           const out = form.querySelector("[data-output]");
           if (res.ok) {
-            out.innerHTML = `<span style="color:var(--primary-blue)">${res.text}</span>`;
+            out.innerHTML = `<span style="color:var(--primary-spirit)">${res.text}</span>`;
           } else {
-            out.innerHTML = `<span style="color:#999; font-size:0.9rem">${res.error || "Formato incompleto..."}</span>`;
+            out.innerHTML = `<span style="color:var(--text-muted); font-size:0.9rem">${res.error || "Formato incompleto..."}</span>`;
           }
         })
         .catch(err => console.log("Calculadora no cargada aún", err));
@@ -215,6 +233,7 @@ window.addEventListener("popstate", route);
 (async function init() {
   try {
     state.dataset = await loadDataset();
+    applySettings();
     route();
     initInstallPrompt();
   } catch (e) {

@@ -50,11 +50,11 @@ export function renderHome(dataset, mode, state = {}) {
     const icon = topicData.icon || (isUrgency ? '🏮' : '📜');
 
     return `
-          <button class="card clickable topic-card" data-nav="topic" data-id="${ref.id}" type="button" aria-label="${topicData.title}" data-id="${ref.id}">
+          <button class="card clickable topic-card" data-nav="topic" data-id="${ref.id}" type="button" aria-label="${topicData.title}">
             <div class="topic-icon">${icon}</div>
             <h2 style="font-family:var(--font-main)">${topicData.title}</h2>
             <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-top:auto;">
-                ${isUrgency ? '<span class="badge urgency">KRISIS</span>' : ''}
+                ${isUrgency ? '<span class="badge urgency">URGENCIA</span>' : ''}
                 ${(topicData.tags || []).slice(0, 2).map(tag =>
       `<span class="badge">${tag.toUpperCase()}</span>`
     ).join('')}
@@ -68,38 +68,71 @@ export function renderHome(dataset, mode, state = {}) {
       <div id="topicSearchEmpty" class="card" style="display:none; text-align:center; padding:40px; border-style:dashed;">
         <span style="font-size:40px; display:block; margin-bottom:15px;">🔍</span>
         <h3>No se encontraron resultados</h3>
-        <p style="color:var(--text-muted)">Intente con otros términos o revise la ortografía.</p>
+        <p style="color:var(--text-muted)">Intente con otros términos clínicos.</p>
       </div>
     </main>
 
     <div class="nav-bottom no-print">
-      <button class="nav-item active" data-nav="home">
-        <span>🏠</span>
-        <span>Inicio</span>
-      </button>
-      <button class="nav-item" onclick="document.getElementById('topicSearch').focus()">
-        <span>🔍</span>
-        <span>Buscar</span>
+      <button class="nav-item" data-nav="home">
+        <span>🎐</span>
+        <span>INICIO</span>
       </button>
       <button class="nav-item" data-nav="printables">
         <span>📚</span>
-        <span>Recursos</span>
+        <span>RECURSOS</span>
       </button>
-      <button class="nav-item" id="btnSettings">
+      <button class="nav-item" data-nav="settings">
         <span>⚙️</span>
-        <span>Ajustes</span>
+        <span>AJUSTES</span>
       </button>
     </div>
-    
-    <div id="shareOverlay" class="overlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; padding:20px;">
-      <div class="overlay-content" style="background:var(--bg-paper); padding:25px; border-radius:var(--radius-lg); max-width:500px; width:100%; box-shadow:var(--shadow-hover);">
-        <h2 style="margin-top:0; color:var(--primary-deep)">Educación al Paciente</h2>
-        <div id="shareBody" style="background:var(--bg-clinical); padding:15px; border-radius:var(--radius-md); margin-bottom:20px; max-height:60vh; overflow-y:auto; border:1px solid var(--border-light);"></div>
-        <div style="display:flex; gap:10px;">
-            <button id="shareClose" class="btn primary" style="flex:1">Cerrar</button>
-            <button class="btn" style="flex:1" onclick="window.print()">🖨️ Imprimir</button>
+  `;
+}
+
+// --- VISTA: AJUSTES (SETTINGS) ---
+export function renderSettings(dataset, _, state) {
+  return `
+    <header>
+      <button class="btn" data-nav="home" style="border:none; font-size:20px;">◂</button>
+      <h1 style="flex:1; margin-left:12px; font-size:1.1rem; color:var(--text-main)">AJUSTES_SISTEMA</h1>
+    </header>
+    <main>
+      <div class="card" style="margin-bottom:20px;">
+        <h3 style="margin:0; font-size:0.9rem; font-family:var(--font-mono); opacity:0.7;">MODO_VISUAL</h3>
+        <div style="display:flex; gap:10px; margin-top:15px;">
+          <button class="btn ${state.theme === 'light' ? 'primary' : ''}" id="btnThemeLight">CLARO</button>
+          <button class="btn ${state.theme === 'dark' ? 'primary' : ''}" id="btnThemeDark">OSCURO</button>
         </div>
       </div>
+
+      <div class="card" style="margin-bottom:20px;">
+        <h3 style="margin:0; font-size:0.9rem; font-family:var(--font-mono); opacity:0.7;">TAMAÑO_TEXTO</h3>
+        <div style="display:flex; gap:10px; margin-top:15px; flex-wrap:wrap;">
+          <button class="btn ${state.fontSize === 'small' ? 'primary' : ''}" id="btnFontSmall">PEQUEÑO</button>
+          <button class="btn ${state.fontSize === 'medium' ? 'primary' : ''}" id="btnFontMedium">MEDIO</button>
+          <button class="btn ${state.fontSize === 'large' ? 'primary' : ''}" id="btnFontLarge">GRANDE</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 style="margin:0; font-size:0.9rem; font-family:var(--font-mono); opacity:0.7;">INFORMACION</h3>
+        <p style="font-size:0.9rem; margin:15px 0 0;">Manual Clínico 2026 v0.3.5<br>Base de datos local cargada.<br>Soporte para uso offline habilitado.</p>
+      </div>
+    </main>
+
+    <div class="nav-bottom no-print">
+      <button class="nav-item" data-nav="home">
+        <span>🎐</span>
+        <span>INICIO</span>
+      </button>
+      <button class="nav-item" data-nav="printables">
+        <span>📚</span>
+        <span>RECURSOS</span>
+      </button>
+      <button class="nav-item active" data-nav="settings">
+        <span>⚙️</span>
+        <span>AJUSTES</span>
+      </button>
     </div>
   `;
 }
@@ -137,18 +170,17 @@ export function renderTopic(dataset, id, mode, isFavorite = false) {
         <span>🎐</span>
         <span>INICIO</span>
       </button>
-      <button class="nav-item active">
+      <button class="nav-item active" data-nav="topic" data-id="${topic.id}">
         <span>📜</span>
         <span>CONTENIDO</span>
       </button>
-      <button class="nav-item" id="btnTopicSettings">
+      <button class="nav-item" data-nav="settings">
         <span>⚙️</span>
-        <span>OPCIONES</span>
+        <span>AJUSTES</span>
       </button>
     </div>
   `;
 }
-
 
 // --- VISTA: LISTA DE RECURSOS (PRINTABLES) ---
 export function renderPrintables(dataset) {
@@ -167,13 +199,13 @@ export function renderPrintables(dataset) {
       <div class="grid-menu">
         ${list.map(p => {
     const isPdf = p.template === 'pdf' || p.url?.toLowerCase().endsWith('.pdf');
-    const icon = isPdf ? '📄' : '🖼️';
+    const icon = isPdf ? '📄' : '📜';
     return `
             <button class="card clickable" data-nav="print" data-id="${p.id}">
               <div class="topic-icon">${icon}</div>
               <h2 style="font-family:var(--font-main); font-size:0.95rem;">${p.title}</h2>
               <div style="margin-top:auto;">
-                <span class="badge">${isPdf ? 'PDF' : 'IMG'}</span>
+                <span class="badge">${isPdf ? 'PDF' : 'GUIDE'}</span>
               </div>
             </button>
           `;
@@ -196,14 +228,13 @@ export function renderPrintables(dataset) {
         <span>📚</span>
         <span>RECURSOS</span>
       </button>
-      <button class="nav-item" id="btnSettings">
+      <button class="nav-item" data-nav="settings">
         <span>⚙️</span>
-        <span>OPCIONES</span>
+        <span>AJUSTES</span>
       </button>
     </div>
   `;
 }
-
 
 // --- VISTA: IMPRIMIBLE ---
 export function renderPrintable(dataset, id) {
@@ -211,13 +242,13 @@ export function renderPrintable(dataset, id) {
   if (!item) return `<main>Recurso no encontrado</main>`;
 
   // 1. Caso PDF
-  if (item.template === 'pdf' || item.url?.toLowerCase().endsWith('.pdf')) {
+  if (item.template === 'pdf' || (item.url && item.url.toLowerCase().endsWith('.pdf'))) {
     return `
       <div style="height:100vh; display:flex; flex-direction:column;">
         <header class="no-print">
-            <button class="btn" data-nav="home">← Volver</button>
-            <h1 style="flex:1; text-align:center;">${item.title}</h1>
-            <button class="btn primary" onclick="document.getElementById('pdfFrame').contentWindow.print()">🖨️</button>
+            <button class="btn" data-nav="printables">◂</button>
+            <h1 style="flex:1; text-align:center;">${item.title.toUpperCase()}</h1>
+            <button class="btn primary" onclick="document.getElementById('pdfFrame').contentWindow.print()">📜</button>
         </header>
         <iframe id="pdfFrame" src="${item.url}" style="flex:1; border:none; width:100%;"></iframe>
       </div>
@@ -234,20 +265,20 @@ export function renderPrintable(dataset, id) {
             <button class="btn primary" onclick="window.print()">📜</button>
         </header>
         <main style="flex:1; display:flex; align-items:flex-start; justify-content:center; padding:20px;">
-            <img src="${item.url}" alt="${item.title}" style="max-width:100%; height:auto; border-radius:var(--radius-md); box-shadow:var(--shadow-hover); background:white;">
+            <img src="${item.url}" alt="${item.title}" style="max-width:100%; height:auto; border-radius:var(--radius-md); box-shadow:var(--shadow-flat); background:white;">
         </main>
       </div>
     `;
   }
 
-  // 3. Caso Checklist Estructurada (JSON)
-  if (item.template === 'guide_checklist') {
+  // 3. Caso Checklist / Tabla / Plan (JSON) - Renderizado Universal
+  if (item.sections || item.template === 'guide_checklist' || item.template === 'crisis_plan_a4' || item.template === 'log_table') {
     const sections = item.sections || [];
     return `
       <div style="min-height:100vh; display:flex; flex-direction:column;">
         <header class="no-print">
             <button class="btn" data-nav="printables">◂</button>
-            <h1 style="flex:1; margin-left:12px; font-size:1.1rem; overflow:hidden; text-overflow:ellipsis;">RECURSO_TEXTO</h1>
+            <h1 style="flex:1; margin-left:12px; font-size:1.1rem; overflow:hidden; text-overflow:ellipsis;">${item.title.toUpperCase()}</h1>
             <button class="btn primary" onclick="window.print()">📜</button>
         </header>
         <main>
@@ -258,7 +289,7 @@ export function renderPrintable(dataset, id) {
 
           ${sections.map(sec => `
             <div class="clinical-box pearl" style="margin-bottom:20px;">
-              <span class="box-title">${sec.title.toUpperCase()}</span>
+              <span class="box-title">${sec.title?.toUpperCase() || 'MODULO'}</span>
               <ul style="list-style:none; padding:0; margin:0;">
                 ${(sec.items || []).map(it => `<li style="margin-bottom:10px; display:flex; gap:10px;"><span style="color:var(--primary-spirit)">•</span><span>${it}</span></li>`).join('')}
               </ul>
@@ -266,16 +297,13 @@ export function renderPrintable(dataset, id) {
           `).join('')}
 
           <div style="margin-top:30px; border-top:var(--border-ink); padding:20px 0; text-align:center; font-family:var(--font-mono); font-size:0.7rem;">
-            <p>SISTEMA_ORIGEM: ${item.meta?.source || 'MANUAL_2026'}</p>
-            <p>ESTE MATERIAL ES PARA APOYO EDUCATIVO Y NO SUSTITUYE EL TRATAMIENTO MÉDICO.</p>
+            <p>SISTEMA: ${item.meta?.source || 'MANUAL_2026'}</p>
+            <p>MATERIAL EDUCATIVO DE APOYO. NO SUSTITUYE EL JUICIO CLÍNICO.</p>
           </div>
         </main>
       </div>
     `;
   }
 
-  return `<main><div class="clinical-box warning"><span class="box-title">FORMATO_NO_SOPORTADO</span>No se puede renderizar este recurso automáticamente.</div></main>`;
+  return `<main><div class="clinical-box warning"><span class="box-title">FORMATO_NO_SOPORTADO</span>No se puede renderizar este recurso automáticamente. Contacte a soporte técnico para este ID: ${item.id}</div><button class="btn" data-nav="printables">◂ VOLVER</button></main>`;
 }
-
-
-
