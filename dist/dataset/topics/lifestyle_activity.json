@@ -1,108 +1,97 @@
 {
-  "id": "lifestyle_nutrition",
-  "title": "Alimentación Saludable",
+  "id": "lifestyle_activity",
+  "title": "Actividad Física (Prescripción)",
   "audience": "both",
-  "tags": ["lifestyle", "nutrition", "metabolico", "peso"],
+  "tags": [
+    "lifestyle",
+    "ejercicio",
+    "metabolico",
+    "fitt",
+    "clinician"
+  ],
   "blocks": [
     {
-      "id": "nutrition_calc_section",
+      "id": "activity_clinical_intro",
       "type": "section",
-      "title": "Hidratación",
-      "audience": "both",
-      "content": "El agua es el nutriente más importante. Calcule su meta diaria:",
+      "title": "Evaluación Clínica",
+      "audience": "clinician",
+      "content": "Antes de prescribir, evalúe el nivel actual y riesgo cardiovascular.",
       "sub_blocks": [
         {
-          "id": "calc_water",
-          "type": "calculator",
-          "title": "Calculadora de Agua",
-          "fn": "water_calc",
-          "inputs": [
-            { "key": "weight", "label": "Su Peso Actual", "unit": "kg" }
-          ],
-          "share_variant": {
-            "title": "La importancia del agua",
-            "content": "Beber suficiente agua reduce la ansiedad por comer y mejora la función de sus riñones."
-          }
+          "id": "activity_safety_check",
+          "type": "alert",
+          "title": "Contraindicaciones Absolutas",
+          "level": "critical",
+          "content": "No iniciar si: Angina inestable, PA descontrolada (>180/110), Arritmia no controlada, Estenosis aórtica severa."
         }
       ]
     },
     {
-      "id": "nutrition_plate_method",
+      "id": "activity_prescription_fitt",
       "type": "section",
-      "title": " El Plato del Bien Comer",
-      "audience": "both",
-      "content": "No necesita pesar la comida. Visualice su plato así:",
+      "title": "Modelo de Prescripción FITT",
+      "audience": "clinician",
       "sub_blocks": [
         {
-          "id": "plate_distribution",
+          "id": "fitt_table",
           "type": "key_value",
-          "title": "Distribución Ideal",
+          "title": "Parámetros",
           "data": {
-            "50% (Medio Plato)": "Verduras y Frutas (Crudas o al vapor)",
-            "25% (Un cuarto)": "Cereales (Arroz, Tortilla, Pasta)",
-            "25% (Un cuarto)": "Proteína (Frijoles, Pollo, Huevo, Queso)"
+            "Frecuencia": "3-5 días/semana (mínimo).",
+            "Intensidad": "Moderada (poder hablar pero no cantar) a Vigorosa.",
+            "Tiempo": "150 min/sem (Moderada) o 75 min/sem (Vigorosa).",
+            "Tipo": "Aeróbico (caminar, nadar) + Fuerza (2 días)."
           }
-        }
-      ]
-    },
-    {
-      "id": "nutrition_hand_portions",
-      "type": "table",
-      "title": "Mida con su mano (Guía Rápida)",
-      "audience": "both",
-      "headers": ["Alimento", "Medida con la Mano"],
-      "rows": [
-        { "food": "Verduras", "portion": "Dos manos juntas (Todo lo que quiera)" },
-        { "food": "Fruta", "portion": "Un puño cerrado" },
-        { "food": "Carne/Pollo", "portion": "Palma de la mano (sin dedos)" },
-        { "food": "Cereales/Pasta", "portion": "Puño cerrado (parte delantera)" },
-        { "food": "Grasas/Aceite", "portion": "Punta del dedo pulgar" }
-      ]
-    },
-    {
-      "id": "nutrition_milpa",
-      "type": "section",
-      "title": "La Dieta de la Milpa",
-      "audience": "both",
-      "content": "Modelo de alimentación saludable basado en nuestra cultura. Es económico, sustentable y nutritivo.",
-      "sub_blocks": [
-        {
-          "id": "milpa_benefits",
-          "type": "checklist",
-          "title": "Los 'Cuatro Fantásticos'",
-          "items": [
-            "🌽 Maíz (Tortilla): Fuente de energía y calcio (nixtamal).",
-            "🫘 Frijol: Proteína vegetal y fibra.",
-            "🎃 Calabaza: Vitaminas y protección estomacal.",
-            "🌶️ Chile: Antioxidantes y sabor (reduce necesidad de sal)."
-          ]
         },
         {
-          "id": "milpa_protein_tip",
-          "type": "alert",
-          "level": "info",
-          "title": "Secreto Nutricional",
-          "content": "Combinar **Maíz + Frijol** en la misma comida crea una proteína tan completa como la de la carne, pero sin colesterol y mucho más barata."
+          "id": "activity_calc_mets",
+          "type": "calculator",
+          "title": "Calculadora de Gasto (METs)",
+          "fn": "mets_calc",
+          "inputs": [
+            {
+              "key": "weight",
+              "label": "Peso (kg)",
+              "unit": "kg"
+            },
+            {
+              "key": "mets",
+              "label": "METs (Intensidad)",
+              "unit": "MET"
+            },
+            {
+              "key": "duration",
+              "label": "Duración (min)",
+              "unit": "min"
+            }
+          ]
         }
       ]
     },
     {
-      "id": "nutrition_avoid",
-      "type": "warning",
-      "title": "⛔ Evitar (Ultraprocesados)",
-      "level": "danger",
+      "id": "activity_patient_menu",
+      "type": "section",
+      "title": "Menú de Opciones para el Paciente",
       "audience": "both",
-      "content": "Reduzca al máximo todo lo que tenga sellos negros:",
+      "content": "Sugerencias para iniciar (Bajo Impacto):",
       "items": [
-        "Refrescos y jugos embotellados (Bombas de azúcar)",
-        "Embutidos (Salchicha, Jamón barato)",
-        "Pan de dulce industrializado",
-        "Sopas instantáneas"
+        "**Caminata Brisk:** Paso constante (como si tuviera prisa).",
+        "**Transporte Activo:** Bajarse una parada antes.",
+        "**Baile en Casa:** 3 canciones seguidas = 10 minutos.",
+        "**Pausas Activas:** Levantarse cada hora (Romper el sedentarismo)."
       ]
+    },
+    {
+      "id": "activity_sedentary_warning",
+      "type": "alert",
+      "title": "Advertencia sobre Sedentarismo",
+      "level": "warning",
+      "audience": "both",
+      "content": "Estar sentado >8 horas al día anula gran parte de los beneficios del ejercicio. Recomiende micro-pausas."
     }
   ],
   "meta": {
-    "source": "manual_local_comorbilidades + NOM-043",
-    "version": "2.2_interactive_water"
+    "source": "ACSM Guidelines + OMS 2020",
+    "version": "2.0_clinician_fitt"
   }
 }

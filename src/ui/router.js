@@ -150,6 +150,61 @@ export function renderTopic(dataset, id, mode, isFavorite = false) {
 }
 
 
+// --- VISTA: LISTA DE RECURSOS (PRINTABLES) ---
+export function renderPrintables(dataset) {
+  const list = Object.values(dataset.printablesById || {});
+
+  return `
+    <header>
+      <button class="btn" data-nav="home" style="border:none; font-size:20px;">◂</button>
+      <h1 style="flex:1; margin-left:12px; font-size:1.1rem; color:var(--text-main)">BIBLIOTECA_RECURSOS</h1>
+    </header>
+    <main>
+      <div style="margin-bottom:24px;">
+        <h2 style="font-family:var(--font-mono); font-size:0.9rem; opacity:0.7;">DOCUMENTOS_Y_GUIAS</h2>
+      </div>
+      
+      <div class="grid-menu">
+        ${list.map(p => {
+    const isPdf = p.template === 'pdf' || p.url?.toLowerCase().endsWith('.pdf');
+    const icon = isPdf ? '📄' : '🖼️';
+    return `
+            <button class="card clickable" data-nav="print" data-id="${p.id}">
+              <div class="topic-icon">${icon}</div>
+              <h2 style="font-family:var(--font-main); font-size:0.95rem;">${p.title}</h2>
+              <div style="margin-top:auto;">
+                <span class="badge">${isPdf ? 'PDF' : 'IMG'}</span>
+              </div>
+            </button>
+          `;
+  }).join('')}
+      </div>
+
+      ${list.length === 0 ? `
+        <div class="card" style="text-align:center; padding:40px; border-style:dashed;">
+          <p>No hay recursos disponibles en este momento.</p>
+        </div>
+      ` : ''}
+    </main>
+
+    <div class="nav-bottom no-print">
+      <button class="nav-item" data-nav="home">
+        <span>🎐</span>
+        <span>INICIO</span>
+      </button>
+      <button class="nav-item active" data-nav="printables">
+        <span>📚</span>
+        <span>RECURSOS</span>
+      </button>
+      <button class="nav-item" id="btnSettings">
+        <span>⚙️</span>
+        <span>OPCIONES</span>
+      </button>
+    </div>
+  `;
+}
+
+
 // --- VISTA: IMPRIMIBLE ---
 export function renderPrintable(dataset, id) {
   const item = dataset.printablesById?.[id];
@@ -174,9 +229,9 @@ export function renderPrintable(dataset, id) {
     return `
       <div class="infographic-viewer" style="min-height:100vh; display:flex; flex-direction:column; background:var(--bg-clinical);">
         <header class="no-print">
-            <button class="btn" data-nav="home">←</button>
-            <h1 style="flex:1; text-align:center;">${item.title}</h1>
-            <button class="btn primary" onclick="window.print()">🖨️</button>
+            <button class="btn" data-nav="printables">◂</button>
+            <h1 style="flex:1; text-align:center;">${item.title.toUpperCase()}</h1>
+            <button class="btn primary" onclick="window.print()">📜</button>
         </header>
         <main style="flex:1; display:flex; align-items:flex-start; justify-content:center; padding:20px;">
             <img src="${item.url}" alt="${item.title}" style="max-width:100%; height:auto; border-radius:var(--radius-md); box-shadow:var(--shadow-hover); background:white;">
@@ -185,7 +240,42 @@ export function renderPrintable(dataset, id) {
     `;
   }
 
-  return `<main>Formato de impresión no optimizado para esta vista.</main>`;
+  // 3. Caso Checklist Estructurada (JSON)
+  if (item.template === 'guide_checklist') {
+    const sections = item.sections || [];
+    return `
+      <div style="min-height:100vh; display:flex; flex-direction:column;">
+        <header class="no-print">
+            <button class="btn" data-nav="printables">◂</button>
+            <h1 style="flex:1; margin-left:12px; font-size:1.1rem; overflow:hidden; text-overflow:ellipsis;">RECURSO_TEXTO</h1>
+            <button class="btn primary" onclick="window.print()">📜</button>
+        </header>
+        <main>
+          <div class="card" style="border-style:dashed; margin-bottom:24px;">
+            <h2 style="font-family:var(--font-main); text-align:center;">${item.title.toUpperCase()}</h2>
+            <p style="font-size:0.8rem; text-align:center; opacity:0.7;">GUI_REF: ${item.id}</p>
+          </div>
+
+          ${sections.map(sec => `
+            <div class="clinical-box pearl" style="margin-bottom:20px;">
+              <span class="box-title">${sec.title.toUpperCase()}</span>
+              <ul style="list-style:none; padding:0; margin:0;">
+                ${(sec.items || []).map(it => `<li style="margin-bottom:10px; display:flex; gap:10px;"><span style="color:var(--primary-spirit)">•</span><span>${it}</span></li>`).join('')}
+              </ul>
+            </div>
+          `).join('')}
+
+          <div style="margin-top:30px; border-top:var(--border-ink); padding:20px 0; text-align:center; font-family:var(--font-mono); font-size:0.7rem;">
+            <p>SISTEMA_ORIGEM: ${item.meta?.source || 'MANUAL_2026'}</p>
+            <p>ESTE MATERIAL ES PARA APOYO EDUCATIVO Y NO SUSTITUYE EL TRATAMIENTO MÉDICO.</p>
+          </div>
+        </main>
+      </div>
+    `;
+  }
+
+  return `<main><div class="clinical-box warning"><span class="box-title">FORMATO_NO_SOPORTADO</span>No se puede renderizar este recurso automáticamente.</div></main>`;
 }
+
 
 

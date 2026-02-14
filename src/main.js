@@ -1,6 +1,6 @@
 // src/main.js
 import { loadDataset } from "./engine/dataset.js";
-import { renderHome, renderTopic, renderPrintable } from "./ui/router.js";
+import { renderHome, renderTopic, renderPrintable, renderPrintables } from "./ui/router.js";
 import { initInstallPrompt } from "./ui/install.js";
 
 const app = document.getElementById("app");
@@ -48,6 +48,8 @@ function route() {
     app.innerHTML = renderTopic(state.dataset, id, state.mode, state.favorites.includes(id));
   } else if (view === "print" && id) {
     app.innerHTML = renderPrintable(state.dataset, id);
+  } else if (view === "printables") {
+    app.innerHTML = renderPrintables(state.dataset);
   } else {
     app.innerHTML = renderHome(state.dataset, state.mode, state);
 
