@@ -3,13 +3,14 @@ import { loadDataset } from "./engine/dataset.js";
 import { renderHome, renderTopic, renderPrintable } from "./ui/router.js";
 import { initInstallPrompt } from "./ui/install.js";
 
-// import { runCalculator } from "./engine/calculators.js"; // Descomenta si ya tienes este archivo
-
 const app = document.getElementById("app");
 
 const state = {
   mode: localStorage.getItem("mode") || "clinician",
-  dataset: null
+  dataset: null,
+  urgencyOnly: false,
+  favorites: JSON.parse(localStorage.getItem("favorites") || "[]"),
+  filterFavorites: false
 };
 
 // Iniciar lógica de instalación
@@ -21,26 +22,56 @@ function setMode(next) {
   route();
 }
 
+function toggleFavorite(id) {
+  const index = state.favorites.indexOf(id);
+  if (index > -1) state.favorites.splice(index, 1);
+  else state.favorites.push(id);
+  localStorage.setItem("favorites", JSON.stringify(state.favorites));
+  route();
+}
+
 function route() {
-  if (!state.dataset) return; // Esperar a que cargue
+  if (!state.dataset) return;
 
   const url = new URL(location.href);
   const view = url.searchParams.get("view") || "home";
   const id = url.searchParams.get("id");
 
+  // Persistencia de contexto clínico
+  if (view === "topic" && id) {
+    localStorage.setItem("lastTopic", id);
+  }
+
   window.scrollTo(0, 0);
 
   if (view === "topic" && id) {
-    app.innerHTML = renderTopic(state.dataset, id, state.mode);
+    app.innerHTML = renderTopic(state.dataset, id, state.mode, state.favorites.includes(id));
   } else if (view === "print" && id) {
     app.innerHTML = renderPrintable(state.dataset, id);
-    // Si es HTML nativo (no PDF), lanzamos print automático
-    const p = state.dataset.printablesById[id];
-    if (p && !p.url) setTimeout(() => window.print(), 500);
   } else {
-    app.innerHTML = renderHome(state.dataset, state.mode);
+    app.innerHTML = renderHome(state.dataset, state.mode, state);
+
+    // Si hay un tema previo, podríamos mostrar una opción de "Continuar revisando"
+    const lastId = localStorage.getItem("lastTopic");
+    if (lastId && state.dataset.topicsById[lastId]) {
+      const resumeBtn = document.getElementById("btnResume");
+      if (resumeBtn) {
+        resumeBtn.style.display = "flex";
+        resumeBtn.onclick = () => nav("topic", lastId);
+        resumeBtn.querySelector("span:last-child").textContent = state.dataset.topicsById[lastId].title;
+      }
+    }
   }
   wireHandlers();
+
+  // Actualizar estado de la navegación inferior
+  document.querySelectorAll(".nav-bottom .nav-item").forEach(btn => {
+    if (btn.dataset.nav === view) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
 }
 
 function nav(view, id) {
@@ -50,6 +81,7 @@ function nav(view, id) {
   history.pushState({}, "", url);
   route();
 }
+
 
 function wireHandlers() {
   // Navegación básica
@@ -68,11 +100,9 @@ function wireHandlers() {
     };
   }
 
-  // Buscador de temas
+  // Buscador de temas (Hero Search)
   const searchInput = document.getElementById("topicSearch");
   if (searchInput) {
-    const countEl = document.getElementById("topicSearchCount");
-    const emptyEl = document.getElementById("topicSearchEmpty");
     const cards = Array.from(document.querySelectorAll(".grid-menu .topic-card"));
 
     const syncSearchState = () => {
@@ -80,25 +110,65 @@ function wireHandlers() {
       let visible = 0;
 
       cards.forEach(card => {
+        const id = card.dataset.id;
         const title = card.querySelector("h2")?.textContent?.toLowerCase() || "";
-        const tags = Array.from(card.querySelectorAll(".badge")).map(b => b.textContent.toLowerCase()).join(" ");
-        const match = !query || title.includes(query) || tags.includes(query);
-        card.style.display = match ? "block" : "none";
+        const badges = Array.from(card.querySelectorAll(".badge")).map(b => b.textContent.toLowerCase());
+        const isUrgent = card.querySelector(".urgency");
+
+        let match = !query || title.includes(query) || badges.some(b => b.includes(query));
+
+        // Filtro de urgencias persistente
+        if (state.urgencyOnly && !isUrgent) match = false;
+        if (state.filterFavorites && !state.favorites.includes(id)) match = false;
+
+        card.style.display = match ? "flex" : "none";
         if (match) visible += 1;
       });
 
-      if (countEl) {
-        countEl.textContent = query
-          ? `${visible} tema${visible === 1 ? "" : "s"} encontrado${visible === 1 ? "" : "s"}`
-          : `${visible} tema${visible === 1 ? "" : "s"} disponible${visible === 1 ? "" : "s"}`;
-      }
-
+      const emptyEl = document.getElementById("topicSearchEmpty");
       if (emptyEl) emptyEl.style.display = visible === 0 ? "block" : "none";
     };
 
     searchInput.oninput = syncSearchState;
+
+    const urgenciasBtn = document.getElementById("btnUrgencias");
+    if (urgenciasBtn) {
+      urgenciasBtn.onclick = () => {
+        state.urgencyOnly = !state.urgencyOnly;
+        urgenciasBtn.style.background = state.urgencyOnly ? "var(--danger-bg)" : "rgba(255,255,255,0.1)";
+        urgenciasBtn.style.color = state.urgencyOnly ? "var(--danger)" : "white";
+        syncSearchState();
+      };
+    }
+
+    const favoritosBtn = document.getElementById("btnFavoritos");
+    if (favoritosBtn) {
+      favoritosBtn.onclick = () => {
+        state.filterFavorites = !state.filterFavorites;
+        favoritosBtn.style.background = state.filterFavorites ? "var(--info-bg)" : "rgba(255,255,255,0.1)";
+        favoritosBtn.style.color = state.filterFavorites ? "var(--info-blue)" : "white";
+        syncSearchState();
+      };
+    }
+
     syncSearchState();
   }
+
+  // Handler para favorito en vista topic
+  const favToggle = document.getElementById("favToggle");
+  if (favToggle) {
+    favToggle.onclick = () => {
+      const id = new URL(location.href).searchParams.get("id");
+      toggleFavorite(id);
+    };
+  }
+
+  // Settings placeholder
+  const settingsBtn = document.getElementById("btnSettings") || document.getElementById("btnTopicSettings");
+  if (settingsBtn) {
+    settingsBtn.onclick = () => alert("Ajustes: Próximamente podrá personalizar las fuentes y el tamaño de texto.");
+  }
+
 
   // Modal "Compartir / Ver para paciente"
   document.querySelectorAll("[data-share]").forEach(btn => {
@@ -106,10 +176,10 @@ function wireHandlers() {
       const overlay = document.getElementById("shareOverlay");
       const body = document.getElementById("shareBody");
       const title = btn.dataset.shareTitle;
-      const content = btn.dataset.shareContent; // Viene del renderBlocks
+      const content = btn.dataset.shareContent;
 
       overlay.querySelector("h2").textContent = title;
-      body.innerHTML = content.replaceAll("\n", "<br>"); // Simple format
+      body.innerHTML = content.replaceAll("\n", "<br>");
       overlay.style.display = "flex";
     };
   });
@@ -117,23 +187,21 @@ function wireHandlers() {
   const closeShare = document.getElementById("shareClose");
   if (closeShare) closeShare.onclick = () => document.getElementById("shareOverlay").style.display = "none";
 
-  // Calculadoras (Lógica Dinámica)
+  // Calculadoras
   document.querySelectorAll("form[data-calc]").forEach(form => {
     form.oninput = () => {
       const fn = form.dataset.calc;
       const inputs = {};
       form.querySelectorAll("input").forEach(i => inputs[i.dataset.key] = parseFloat(i.value));
 
-      // Aquí conectamos con tu engine/calculators.js
-      // Por ahora un dummy para que no falle si no tienes el archivo
       import("./engine/calculators.js")
         .then(module => {
           const res = module.runCalculator(fn, inputs);
           const out = form.querySelector("[data-output]");
           if (res.ok) {
-            out.innerHTML = `<span style="font-size:1.2em; font-weight:bold; color:#0066cc">${res.text}</span>`;
+            out.innerHTML = `<span style="color:var(--primary-blue)">${res.text}</span>`;
           } else {
-            out.innerHTML = `<span style="color:#999">${res.error || "..."}</span>`;
+            out.innerHTML = `<span style="color:#999; font-size:0.9rem">${res.error || "Formato incompleto..."}</span>`;
           }
         })
         .catch(err => console.log("Calculadora no cargada aún", err));
@@ -146,13 +214,8 @@ window.addEventListener("popstate", route);
 (async function init() {
   try {
     state.dataset = await loadDataset();
-    console.log("Dataset cargado:", state.dataset);
     route();
   } catch (e) {
-    app.innerHTML = `<div style="padding:20px; text-align:center">
-      <h2>Error iniciando App</h2>
-      <p>${e.message}</p>
-      <small>Revisa la consola para más detalles</small>
-    </div>`;
+    app.innerHTML = `<div class="clinical-box danger" style="margin:20px"><span class="box-title">ERROR DE SISTEMA</span>${e.message}</div>`;
   }
 })();

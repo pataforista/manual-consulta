@@ -11,17 +11,17 @@
     "blocks": [
         {
             "id": "psych_overview_intro",
-            "type": "alert",
+            "type": "pearl",
             "title": "Marco de uso y supuesto operativo",
-            "level": "info",
+            "didactic_level": 1,
             "audience": "clinician",
             "content": "Material diseñado para entornos clínicos reales (urgencias y consulta externa) como apoyo estandarizado. No sustituye protocolos locales ni juicio clínico. Principio rector: primero seguridad médica y ambiental, luego psiquiatría (alineado con Project BETA)."
         },
         {
             "id": "psych_overview_patient_use_guardrail",
-            "type": "alert",
+            "type": "danger",
             "title": "Uso con pacientes: regla de seguridad",
-            "level": "warning",
+            "didactic_level": 1,
             "audience": "clinician",
             "content": "El material para paciente está diseñado para conversación guiada por personal médico. No se recomienda su uso como autoevaluación ni como sustituto de consulta profesional."
         },
@@ -29,6 +29,7 @@
             "id": "psych_overview_scope",
             "type": "checklist",
             "title": "Declarar al inicio de la atención",
+            "didactic_level": 1,
             "audience": "clinician",
             "items": [
                 "Población: adulto o adolescente (si adolescente, activar bloque de tutores, consentimiento y clínica de adolescentes).",
@@ -41,6 +42,7 @@
             "id": "psych_overview_clearance",
             "type": "section",
             "title": "Capa universal de seguridad (SIEMPRE en urgencias)",
+            "didactic_level": 1,
             "audience": "clinician",
             "content": "Antes de etiquetar \"psiquiátrico\", complete triage médico mínimo y seguridad ambiental.",
             "sub_blocks": [

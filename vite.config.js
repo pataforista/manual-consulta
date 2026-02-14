@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['dataset/**', 'public/**'],
+      includeAssets: ['dataset/**', 'icon-192x192.png', 'icon-512x512.png'],
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
         runtimeCaching: [
@@ -14,9 +14,9 @@ export default defineConfig({
             urlPattern: ({ url }) => url.pathname.startsWith('/dataset/'),
             handler: 'StaleWhileRevalidate',
             options: {
-              cacheName: 'api-cache',
+              cacheName: 'clinical-manual-v1',
               expiration: {
-                maxEntries: 100,
+                maxEntries: 200,
                 maxAgeSeconds: 60 * 60 * 24 * 30 // 30 Days
               },
               cacheableResponse: {
@@ -27,23 +27,33 @@ export default defineConfig({
         ]
       },
       manifest: {
-        name: 'Manual Comorbilidades',
-        short_name: 'Comorbilidades',
-        description: 'Manual de apoyo para consulta externa de psiquiatría',
-        theme_color: '#ffffff',
+        name: 'Manual Clínico 2026',
+        short_name: 'Manual2026',
+        description: 'Apoyo para consulta de psiquiatría y comorbilidades médicas',
+        theme_color: '#0e2f56',
+        background_color: '#FFF8E7',
+        display: 'standalone',
+        orientation: 'portrait',
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: 'icon-192x192.png',
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: 'pwa-512x512.png',
+            src: 'icon-512x512.png',
             sizes: '512x512',
             type: 'image/png'
+          },
+          {
+            src: 'icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
           }
         ]
       }
     })
+
   ]
 });
