@@ -1,6 +1,8 @@
 // src/main.js
 import { loadDataset } from "./engine/dataset.js";
 import { renderHome, renderTopic, renderPrintable, renderPrintables, renderSettings } from "./ui/router.js";
+import { initSearch, search as performSearch } from "./engine/search.js";
+import { initBottomSheet, openBottomSheet } from "./ui/bottomSheet.js";
 import { initInstallPrompt } from "./ui/install.js";
 import "./ui/sw-register.js";
 
@@ -127,23 +129,32 @@ function wireHandlers() {
     const cards = Array.from(document.querySelectorAll(".grid-menu .topic-card"));
 
     const syncSearchState = () => {
-      const query = searchInput.value.trim().toLowerCase();
+      const query = searchInput.value.trim();
       let visible = 0;
 
-      cards.forEach(card => {
-        const id = card.dataset.id;
-        const title = card.querySelector("h2")?.textContent?.toLowerCase() || "";
-        const badges = Array.from(card.querySelectorAll(".badge")).map(b => b.textContent.toLowerCase());
-        const isUrgent = card.querySelector(".urgency");
+      if (!query) {
+        cards.forEach(card => {
+          const id = card.dataset.id;
+          let match = true;
+          if (state.urgencyOnly && !(dataset.topicsById[id].tags || []).some(t => ['urgencia', 'crisis', 'urgencias'].includes(t))) match = false;
+          if (state.filterFavorites && !state.favorites.includes(id)) match = false;
+          card.style.display = match ? "flex" : "none";
+          if (match) visible += 1;
+        });
+      } else {
+        const results = performSearch(query);
+        const matchedIds = new Set(results.map(r => r.item.type === 'topic' ? r.item.id : r.item.topicId));
 
-        let match = !query || title.includes(query) || badges.some(b => b.includes(query));
+        cards.forEach(card => {
+          const id = card.dataset.id;
+          let match = matchedIds.has(id);
+          if (state.urgencyOnly && !(dataset.topicsById[id].tags || []).some(t => ['urgencia', 'crisis', 'urgencias'].includes(t))) match = false;
+          if (state.filterFavorites && !state.favorites.includes(id)) match = false;
 
-        if (state.urgencyOnly && !isUrgent) match = false;
-        if (state.filterFavorites && !state.favorites.includes(id)) match = false;
-
-        card.style.display = match ? "flex" : "none";
-        if (match) visible += 1;
-      });
+          card.style.display = match ? "flex" : "none";
+          if (match) visible += 1;
+        });
+      }
 
       const emptyEl = document.getElementById("topicSearchEmpty");
       if (emptyEl) emptyEl.style.display = visible === 0 ? "block" : "none";
@@ -193,19 +204,16 @@ function wireHandlers() {
 
   document.querySelectorAll("[data-share]").forEach(btn => {
     btn.onclick = () => {
-      const overlay = document.getElementById("shareOverlay");
-      const body = document.getElementById("shareBody");
-      const title = btn.dataset.shareTitle;
-      const content = btn.dataset.shareContent;
-
-      overlay.querySelector("h2").textContent = title;
-      body.innerHTML = content.replaceAll("\n", "<br>");
-      overlay.style.display = "flex";
+      const title = btn.dataset.shareTitle || "Información";
+      const content = btn.dataset.shareContent || "";
+      openBottomSheet(`
+        <h2 style="margin-bottom:15px;">${title}</h2>
+        <div style="font-size:1.1rem; line-height:1.6;">${content.replaceAll("\n", "<br>")}</div>
+        <button class="btn primary" style="width:100%; margin-top:20px;" onclick="document.getElementById('sheetOverlay').click()">Cerrar</button>
+      `);
     };
   });
 
-  const closeShare = document.getElementById("shareClose");
-  if (closeShare) closeShare.onclick = () => document.getElementById("shareOverlay").style.display = "none";
 
   document.querySelectorAll("form[data-calc]").forEach(form => {
     form.oninput = () => {
@@ -233,6 +241,8 @@ window.addEventListener("popstate", route);
 (async function init() {
   try {
     state.dataset = await loadDataset();
+    initSearch(state.dataset.topicsById);
+    initBottomSheet();
     applySettings();
     route();
     initInstallPrompt();

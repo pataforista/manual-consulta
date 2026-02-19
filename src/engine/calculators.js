@@ -214,6 +214,48 @@ export function runCalculator(fn, inputs) {
       value: total
     };
   }
+  // --- 10. Índice Tabáquico (Paquetes-Año) ---
+  if (fn === "pack_years") {
+    const packs = safeFloat(inputs.packs_per_day);
+    const years = safeFloat(inputs.years_smoking);
+
+    if (packs <= 0 || years <= 0) return { ok: false, error: "Faltan datos" };
+
+    const total = packs * years;
+    const isHigh = total >= 20;
+    const color = isHigh ? "red" : "#333";
+    const alert = isHigh ? "<strong>Criterio p/Tamizaje TAC Pulmón</strong>" : "Bajo Riesgo Pulmonar";
+
+    return {
+      ok: true,
+      text: `Índice: <strong style="color:${color}">${total} Paquetes-Año</strong><br><small>${alert}</small>`,
+      value: total
+    };
+  }
+
+  // --- 11. Sugerencia de Tamizaje Cáncer (Basado en USPSTF) ---
+  if (fn === "cancer_screening") {
+    const age = safeFloat(inputs.age);
+    const sex = inputs.sex; // 'm' o 'f'
+
+    if (age < 18) return { ok: false, error: "Solo para adultos" };
+
+    const checks = [];
+    if (age >= 21 && age <= 65 && sex === 'f') checks.push("Cervicouterino (Pap/VPH)");
+    if (age >= 40) checks.push("Mama (Mastografía)");
+    if (age >= 45 && age <= 75) checks.push("Colorrectal (Sangre oculta/Colonoscopia)");
+    if (age >= 50 && age <= 80) checks.push("Pulmón (Si fumador >20 p-a)");
+    if (age >= 55 && age <= 69 && sex === 'm') checks.push("Próstata (Decisión compartida)");
+
+    if (checks.length === 0) return { ok: true, text: "No hay tamizaje de rutina sugerido para esta edad." };
+
+    return {
+      ok: true,
+      text: `Sugerencias:<br><ul style="text-align:left; font-size:0.9rem;">${checks.map(c => `<li>${c}</li>`).join('')}</ul>`,
+      value: checks.length
+    };
+  }
+
   return { ok: false, error: `Calculadora '${fn}' no encontrada` };
 
 }

@@ -11,6 +11,25 @@
     ],
     "blocks": [
         {
+            "id": "cancer_calc_check",
+            "type": "calculator",
+            "title": "Sugerencia Automática de Tamizaje",
+            "fn": "cancer_screening",
+            "inputs": [
+                {
+                    "key": "age",
+                    "label": "Edad Actual",
+                    "unit": "años"
+                },
+                {
+                    "key": "sex",
+                    "label": "Sexo (m/f)",
+                    "unit": "m/f"
+                }
+            ],
+            "audience": "clinician"
+        },
+        {
             "id": "cancer_intro_alert",
             "type": "alert",
             "title": "Actualización 2024-2025",
@@ -89,6 +108,24 @@
             "audience": "both",
             "content": "Cribado con TAC de Baja Dosis (LDCT) en fumadores.",
             "sub_blocks": [
+                {
+                    "type": "calculator",
+                    "title": "Cálculo de Riesgo Tabáquico",
+                    "fn": "pack_years",
+                    "inputs": [
+                        {
+                            "key": "packs_per_day",
+                            "label": "Paquetes/Día",
+                            "unit": "cant."
+                        },
+                        {
+                            "key": "years_smoking",
+                            "label": "Años fumando",
+                            "unit": "años"
+                        }
+                    ],
+                    "audience": "clinician"
+                },
                 {
                     "type": "checklist",
                     "title": "Criterios de Inclusión (USPSTF)",
