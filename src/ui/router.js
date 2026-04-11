@@ -8,24 +8,27 @@ export function renderHome(dataset, mode, state = {}) {
 
   return `
     <header>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <span style="font-size:24px;">🎐</span>
-        <h1 style="color:var(--text-main)">Manual Clínico 2026</h1>
+      <div style="display:flex; align-items:center; gap:12px; flex:1;">
+        <span style="font-size:28px;">🎐</span>
+        <div>
+          <h1 style="color:var(--primary-spirit); margin:0;">Manual Clínico</h1>
+          <div class="breadcrumb" style="font-size:0.75rem; margin-top:2px;">Inicio</div>
+        </div>
       </div>
-      <button id="modeToggle" class="btn" style="padding: 4px 12px; font-size:10px;">
-        ${mode === 'clinician' ? 'MED_MODE_INIT' : 'PAT_MODE_AUTH'}
+      <button id="modeToggle" class="btn" style="padding: 8px 14px; font-size:10px; white-space:nowrap;">
+        ${mode === 'clinician' ? '👨‍⚕️ CLÍNICO' : '👤 PACIENTE'}
       </button>
     </header>
 
     <div class="search-hero no-print">
       <div class="search-container">
-        <input type="search" id="topicSearch" placeholder="BUSCAR_PROTOCOLO..." class="search-input" aria-label="Buscar temas">
+        <input type="search" id="topicSearch" placeholder="Buscar protocolos, diagnósticos, medicamentos..." class="search-input" aria-label="Buscar temas">
       </div>
-      <div style="margin-top:20px; display:flex; justify-content:center; gap:12px;">
-        <button class="btn ${urgencyOnly ? 'primary' : ''}" id="btnUrgencias">
+      <div style="margin-top:18px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+        <button class="btn ${urgencyOnly ? 'primary' : ''}" id="btnUrgencias" title="Mostrar solo protocolos de urgencia">
           🚨 URGENCIA
         </button>
-        <button class="btn ${filterFavorites ? 'primary' : ''}" id="btnFavoritos">
+        <button class="btn ${filterFavorites ? 'primary' : ''}" id="btnFavoritos" title="Mostrar solo favoritos">
           ⭐ FAVORITO
         </button>
       </div>
@@ -93,8 +96,11 @@ export function renderHome(dataset, mode, state = {}) {
 export function renderSettings(dataset, _, state) {
   return `
     <header>
-      <button class="btn" data-nav="home" style="border:none; font-size:20px;">◂</button>
-      <h1 style="flex:1; margin-left:12px; font-size:1.1rem; color:var(--text-main)">AJUSTES_SISTEMA</h1>
+      <button class="btn" data-nav="home" style="border:none; padding:8px 10px; font-size:18px;" title="Volver al inicio">◂</button>
+      <div style="flex:1; margin-left:8px;">
+        <h1 style="font-size:1rem; margin:0; color:var(--primary-spirit);">Ajustes</h1>
+        <div class="breadcrumb" style="font-size:0.75rem;">Inicio → Ajustes</div>
+      </div>
     </header>
     <main>
       <div class="card" style="margin-bottom:20px;">
@@ -145,11 +151,14 @@ export function renderTopic(dataset, id, mode, isFavorite = false) {
 
   return `
     <header>
-      <button class="btn" data-nav="home" style="border:none; font-size:20px;">◂</button>
-      <h1 style="flex:1; margin-left:12px; font-size:1.1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${topic.title.toUpperCase()}</h1>
-      <div style="display:flex; gap:8px;">
-          <button class="btn" id="favToggle" title="Favorito" style="font-size:18px; border:none;">${isFavorite ? '✦' : '✧'}</button>
-          <button class="btn" onclick="window.print()" style="border:none; font-size:18px;">📜</button>
+      <button class="btn" data-nav="home" style="border:none; padding:8px 10px; font-size:18px;" title="Volver al inicio">◂</button>
+      <div style="flex:1; margin-left:8px; min-width:0;">
+        <h1 style="font-size:1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin:0; color:var(--primary-spirit);">${topic.title}</h1>
+        <div class="breadcrumb" style="font-size:0.75rem;">Inicio → ${topic.title.substring(0, 20)}${topic.title.length > 20 ? '...' : ''}</div>
+      </div>
+      <div style="display:flex; gap:6px; flex-shrink:0;">
+          <button class="btn" id="favToggle" title="${isFavorite ? 'Quitar de favoritos' : 'Añadir a favoritos'}" style="font-size:16px; padding:8px 10px; border:none;">${isFavorite ? '⭐' : '☆'}</button>
+          <button class="btn" onclick="window.print()" style="border:none; padding:8px 10px; font-size:16px;" title="Imprimir">📄</button>
       </div>
     </header>
     <main>
@@ -188,8 +197,11 @@ export function renderPrintables(dataset) {
 
   return `
     <header>
-      <button class="btn" data-nav="home" style="border:none; font-size:20px;">◂</button>
-      <h1 style="flex:1; margin-left:12px; font-size:1.1rem; color:var(--text-main)">BIBLIOTECA_RECURSOS</h1>
+      <button class="btn" data-nav="home" style="border:none; padding:8px 10px; font-size:18px;" title="Volver al inicio">◂</button>
+      <div style="flex:1; margin-left:8px;">
+        <h1 style="font-size:1rem; margin:0; color:var(--primary-spirit);">Recursos</h1>
+        <div class="breadcrumb" style="font-size:0.75rem;">Inicio → Recursos</div>
+      </div>
     </header>
     <main>
       <div style="margin-bottom:24px;">
@@ -246,9 +258,12 @@ export function renderPrintable(dataset, id) {
     return `
       <div style="height:100vh; display:flex; flex-direction:column;">
         <header class="no-print">
-            <button class="btn" data-nav="printables">◂</button>
-            <h1 style="flex:1; text-align:center;">${item.title.toUpperCase()}</h1>
-            <button class="btn primary" onclick="document.getElementById('pdfFrame').contentWindow.print()">📜</button>
+            <button class="btn" data-nav="printables" style="border:none; padding:8px 10px; font-size:18px;" title="Volver a recursos">◂</button>
+            <div style="flex:1; margin-left:8px; min-width:0;">
+              <h1 style="font-size:1rem; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--primary-spirit);">${item.title}</h1>
+              <div class="breadcrumb" style="font-size:0.75rem;">Inicio → Recursos → Documento</div>
+            </div>
+            <button class="btn primary" onclick="document.getElementById('pdfFrame').contentWindow.print()" title="Imprimir PDF">📄</button>
         </header>
         <iframe id="pdfFrame" src="${item.url}" style="flex:1; border:none; width:100%;"></iframe>
       </div>
@@ -260,9 +275,12 @@ export function renderPrintable(dataset, id) {
     return `
       <div class="infographic-viewer" style="min-height:100vh; display:flex; flex-direction:column; background:var(--bg-clinical);">
         <header class="no-print">
-            <button class="btn" data-nav="printables">◂</button>
-            <h1 style="flex:1; text-align:center;">${item.title.toUpperCase()}</h1>
-            <button class="btn primary" onclick="window.print()">📜</button>
+            <button class="btn" data-nav="printables" style="border:none; padding:8px 10px; font-size:18px;" title="Volver a recursos">◂</button>
+            <div style="flex:1; margin-left:8px; min-width:0;">
+              <h1 style="font-size:1rem; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--primary-spirit);">${item.title}</h1>
+              <div class="breadcrumb" style="font-size:0.75rem;">Inicio → Recursos → Infografía</div>
+            </div>
+            <button class="btn primary" onclick="window.print()" title="Imprimir infografía">📄</button>
         </header>
         <main style="flex:1; display:flex; align-items:flex-start; justify-content:center; padding:20px;">
             <img src="${item.url}" alt="${item.title}" style="max-width:100%; height:auto; border-radius:var(--radius-md); box-shadow:var(--shadow-flat); background:white;">
@@ -277,9 +295,12 @@ export function renderPrintable(dataset, id) {
     return `
       <div style="min-height:100vh; display:flex; flex-direction:column;">
         <header class="no-print">
-            <button class="btn" data-nav="printables">◂</button>
-            <h1 style="flex:1; margin-left:12px; font-size:1.1rem; overflow:hidden; text-overflow:ellipsis;">${item.title.toUpperCase()}</h1>
-            <button class="btn primary" onclick="window.print()">📜</button>
+            <button class="btn" data-nav="printables" style="border:none; padding:8px 10px; font-size:18px;" title="Volver a recursos">◂</button>
+            <div style="flex:1; margin-left:8px; min-width:0;">
+              <h1 style="font-size:1rem; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--primary-spirit);">${item.title}</h1>
+              <div class="breadcrumb" style="font-size:0.75rem;">Inicio → Recursos → Guía</div>
+            </div>
+            <button class="btn primary" onclick="window.print()" title="Imprimir documento">📄</button>
         </header>
         <main>
           <div class="card" style="border-style:dashed; margin-bottom:24px;">
