@@ -24,26 +24,39 @@ export async function loadDataset() {
   if (!manifest || !manifest.topics) throw new Error("Manifest inválido");
 
   const topicsById = {};
-  for (const ref of manifest.topics) {
+  const topicPromises = manifest.topics.map(async (ref) => {
     const topic = await fetch(`./${ref.path}`).then(r => r.json());
     const v = basicValidateTopic(topic);
     if (!v.ok) {
       console.error(ref.id, v.error, topic);
       throw new Error(`Topic inválido: ${ref.id} (${v.error})`);
     }
+    return topic;
+  });
+
+  const topics = await Promise.all(topicPromises);
+  topics.forEach(topic => {
     topicsById[topic.id] = topic;
-  }
+  });
 
   const printablesById = {};
 
   // 1. Cargar printables explícitos del manifest
-  for (const pref of manifest.printables || []) {
-    try {
-      const pr = await fetch(`./${pref.path}`).then(r => r.json());
-      printablesById[pr.id] = pr;
-    } catch (e) {
-      console.warn("Error cargando printable explícito:", pref.path, e);
-    }
+  if (manifest.printables && manifest.printables.length > 0) {
+    const printablePromises = manifest.printables.map(async (pref) => {
+      try {
+        const pr = await fetch(`./${pref.path}`).then(r => r.json());
+        return pr;
+      } catch (e) {
+        console.warn("Error cargando printable explícito:", pref.path, e);
+        return null;
+      }
+    });
+
+    const printables = await Promise.all(printablePromises);
+    printables.forEach(pr => {
+      if (pr) printablesById[pr.id] = pr;
+    });
   }
 
   // 2. Cargar printables autogenerados (PDFs e Infografías)
