@@ -12,20 +12,35 @@ export function renderHome(dataset, mode, state = {}) {
         <span style="font-size:24px;">🎐</span>
         <h1 style="color:var(--text-main)">Manual Clínico 2026</h1>
       </div>
-      <button id="modeToggle" class="btn" style="padding: 4px 12px; font-size:10px;">
-        ${mode === 'clinician' ? 'MED_MODE_INIT' : 'PAT_MODE_AUTH'}
-      </button>
+
     </header>
 
     <div class="search-hero no-print">
       <div class="search-container">
         <input type="search" id="topicSearch" placeholder="BUSCAR_PROTOCOLO..." class="search-input" aria-label="Buscar temas">
       </div>
-      <div style="margin-top:20px; display:flex; justify-content:center; gap:12px;">
-        <button class="btn ${urgencyOnly ? 'primary' : ''}" id="btnUrgencias">
+      
+      <!-- QUICK ACTIONS -->
+      <div style="margin-top:20px; display:grid; grid-template-columns: repeat(2, 1fr); gap:10px;">
+        <button class="btn" onclick="openQuickTool('bmi')" style="font-size:0.75rem; padding:8px; display:flex; align-items:center; gap:8px; justify-content:center;">
+          <span>🧮</span> IMC_RAPIDO
+        </button>
+        <button class="btn" data-nav="metabolic" style="font-size:0.75rem; padding:8px; display:flex; align-items:center; gap:8px; justify-content:center;">
+          <span>❤️</span> RIESGO_METAB
+        </button>
+        <button class="btn" data-nav="print" data-id="safety_plan_a4" style="font-size:0.75rem; padding:8px; display:flex; align-items:center; gap:8px; justify-content:center;">
+          <span>📋</span> PLAN_SEG
+        </button>
+        <button class="btn" onclick="openQuickTool('hr_target')" style="font-size:0.75rem; padding:8px; display:flex; align-items:center; gap:8px; justify-content:center;">
+          <span>⚡</span> FC_OBJETIVO
+        </button>
+      </div>
+
+      <div style="margin-top:15px; display:flex; justify-content:center; gap:12px;">
+        <button class="btn ${urgencyOnly ? 'primary' : ''}" id="btnUrgencias" style="flex:1">
           🚨 URGENCIA
         </button>
-        <button class="btn ${filterFavorites ? 'primary' : ''}" id="btnFavoritos">
+        <button class="btn ${filterFavorites ? 'primary' : ''}" id="btnFavoritos" style="flex:1">
           ⭐ FAVORITO
         </button>
       </div>
@@ -44,7 +59,7 @@ export function renderHome(dataset, mode, state = {}) {
         ${topicsList.map(ref => {
     const topicData = dataset.topicsById[ref.id];
     if (!topicData) return '';
-    if (mode === 'patient' && topicData.audience === 'clinician') return '';
+
 
     const isUrgency = (topicData.tags || []).includes('urgencia') || (topicData.tags || []).includes('crisis') || (topicData.tags || []).includes('urgencias');
     const icon = topicData.icon || (isUrgency ? '🏮' : '📜');
@@ -159,9 +174,10 @@ export function renderTopic(dataset, id, mode, isFavorite = false) {
       
       ${renderBlocks(dataset, topic, mode)}
       
-      <div style="margin-top:40px; padding:30px 20px; border-top:var(--border-ink); text-align:center; color:var(--text-muted); font-family:var(--font-mono); font-size:0.75rem; letter-spacing:0.5px;">
-        <p><strong>FUERZA_EVIDENCIA:</strong> ${topic.meta?.source || 'NUCLEO_INTERNO'} (REF_2026)</p>
-        <p>ESTE DOCUMENTO ES DE CARÁCTER CLÍNICO. REQUIERE CRITERIO PROFESIONAL PARA SU EJECUCIÓN.</p>
+      <div class="clinical-box warning" style="margin-top:40px; text-align:center; font-size:0.8rem; border-style:dashed;">
+        <span class="box-title">AVISO_LEGAL_Y_EVIDENCIA</span>
+        <p><strong>ESTE DOCUMENTO ES DE CARÁCTER CLÍNICO EXCLUSIVO.</strong><br>
+        Requiere criterio profesional para su ejecución. Fuerza de evidencia: ${topic.meta?.source || 'NUCLEO_INTERNO'} (REF_2026)</p>
       </div>
     </main>
 
@@ -210,6 +226,14 @@ export function renderPrintables(dataset) {
             </button>
           `;
   }).join('')}
+
+          <button class="card clickable" data-nav="metabolic" style="border-style:dashed; background:var(--success-bg);">
+            <div class="topic-icon">❤️</div>
+            <h2 style="font-family:var(--font-main); font-size:0.95rem;">DASHBOARD RIESGO METABÓLICO</h2>
+            <div style="margin-top:auto;">
+              <span class="badge" style="background:var(--primary-spirit); color:white;">PROFESIONAL</span>
+            </div>
+          </button>
       </div>
 
       ${list.length === 0 ? `
@@ -306,4 +330,44 @@ export function renderPrintable(dataset, id) {
   }
 
   return `<main><div class="clinical-box warning"><span class="box-title">FORMATO_NO_SOPORTADO</span>No se puede renderizar este recurso automáticamente. Contacte a soporte técnico para este ID: ${item.id}</div><button class="btn" data-nav="printables">◂ VOLVER</button></main>`;
+}
+// --- VISTA: DASHBOARD METABOLICO ---
+export function renderMetabolicDashboard() {
+  return `
+    <header>
+      <button class="btn" data-nav="home" style="border:none; font-size:20px;">◂</button>
+      <h1 style="flex:1; margin-left:12px; font-size:1.1rem; color:var(--text-main)">DASHBOARD_METABOLICO</h1>
+    </header>
+    <main>
+      <div class="clinical-box warning">
+        <span class="box-title">MONITOREITO_ANTIPSIQUOTICOS</span>
+        Evaluación integral de riesgo metabólico según guías 2026.
+      </div>
+
+      <div class="card" style="padding:20px;">
+        <h3 style="margin-bottom:20px; font-family:var(--font-mono); font-size:0.9rem;">DATOS_DEL_PACIENTE</h3>
+        <form id="metabolicForm" oninput="updateMetabolicReport()" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+          <label>PESO (kg)<br><input type="number" class="search-input" name="weight" step="0.1"></label>
+          <label>TALLA (m)<br><input type="number" class="search-input" name="height" step="0.01"></label>
+          <label>CINTURA (cm)<br><input type="number" class="search-input" name="waist"></label>
+          <label>GLUCOSA (mg/dL)<br><input type="number" class="search-input" name="glucose"></label>
+          <label>SISTÓLICA<br><input type="number" class="search-input" name="sys"></label>
+          <label>DIASTÓLICA<br><input type="number" class="search-input" name="dia"></label>
+          <label style="grid-column: span 2;">LDL CALCULADO (mg/dL)<br><input type="number" class="search-input" name="ldl"></label>
+        </form>
+      </div>
+
+      <div id="metabolicResults" class="card" style="margin-top:20px; background:var(--bg-clinical); border-style:dashed;">
+          <div style="font-family:var(--font-mono); font-size:0.8rem; opacity:0.6; margin-bottom:10px;">VISTA_PREVIA_REPORTE</div>
+          <div id="metabolicReportText" style="white-space:pre-wrap; font-family:var(--font-mono); font-size:0.85rem;">Complete los datos para generar reporte...</div>
+          <button class="btn primary" onclick="copyMetabolicReport()" style="width:100%; margin-top:15px;">📋 COPIAR NOTA CLÍNICA</button>
+      </div>
+    </main>
+
+    <div class="nav-bottom no-print">
+      <button class="nav-item" data-nav="home"><span>🎐</span><span>INICIO</span></button>
+      <button class="nav-item active" data-nav="metabolic"><span>❤️</span><span>RIESGO</span></button>
+      <button class="nav-item" data-nav="settings"><span>⚙️</span><span>AJUSTES</span></button>
+    </div>
+  `;
 }

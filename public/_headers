@@ -1,0 +1,18 @@
+# Security Headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Permissions-Policy: interest-cohort=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+# PWA: Force Service Worker to check for updates
+/sw.js
+  Service-Worker-Allowed: /
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# Media Caching
+/dataset/*.json
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/pdfs/*
+  Cache-Control: public, max-age=31536000, immutable

@@ -1,9 +1,5 @@
 export function renderBlocks(dataset, topic, mode) {
-  const blocks = (topic.blocks || []).filter(b => {
-    const aud = b.audience || "both";
-    if (mode === "patient") return (aud === "patient" || aud === "both");
-    return true;
-  });
+  const blocks = (topic.blocks || []);
   return blocks.map(b => renderBlock(dataset, b, mode)).join("");
 }
 
@@ -54,16 +50,12 @@ function renderKeyValue(data) {
 }
 
 function shareBtn(b) {
-  if (!b.share_variant?.content) return "";
-  return `<button class="btn no-print" style="margin-top:10px" data-share="1" data-share-title="${esc(b.share_variant.title || "Para paciente")}" data-share-content="${esc(b.share_variant.content)}">👤 Ver para paciente</button>`;
+  // Deshabilitado: enfoque exclusivo profesional
+  return "";
 }
 
 function renderSubBlocks(dataset, subBlocks, mode) {
-  const arr = (subBlocks || []).filter(sb => {
-    const aud = sb.audience || "both";
-    if (mode === "patient") return (aud === "patient" || aud === "both");
-    return true;
-  });
+  const arr = (subBlocks || []);
   return arr.map(sb => renderBlock(dataset, sb, mode)).join("");
 }
 
@@ -120,9 +112,12 @@ export function renderBlock(dataset, b, mode) {
     const list = items.length ? `<ul style="margin:10px 0 0; padding-left:20px;">${items.map(it => `<li>${esc(it)}</li>`).join("")}</ul>` : "";
     return `<div class="clinical-box ${lvl}">
       <span class="box-title">${label}</span>
+      <button class="btn-copy no-print" onclick="copyClinicalText(this)" title="Copiar al portapapeles" style="position:absolute; top:5px; right:5px; background:none; border:none; cursor:pointer; opacity:0.5; padding:5px;">📋</button>
       ${b.title ? `<strong>${esc(b.title)}</strong><br>` : ""}
-      <p style="margin:5px 0 0;">${esc(b.content || "").replaceAll("\n", "<br>")}</p>
-      ${list}
+      <div class="copy-content">
+        <p style="margin:5px 0 0;">${esc(b.content || "").replaceAll("\n", "<br>")}</p>
+        ${list}
+      </div>
       ${share}
     </div>`;
   }

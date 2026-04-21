@@ -1,0 +1,7 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "manual-clinico-2026"
+pages_build_output_dir = "dist"
+
+[vars]
+ENVIRONMENT = "production"
+APP_VERSION = "0.3.5"

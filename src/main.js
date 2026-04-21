@@ -1,6 +1,6 @@
 // src/main.js
 import { loadDataset } from "./engine/dataset.js";
-import { renderHome, renderTopic, renderPrintable, renderPrintables, renderSettings } from "./ui/router.js";
+import { renderHome, renderTopic, renderPrintable, renderPrintables, renderSettings, renderMetabolicDashboard } from "./ui/router.js";
 import { initSearch, search as performSearch } from "./engine/search.js";
 import { initBottomSheet, openBottomSheet } from "./ui/bottomSheet.js";
 import { initInstallPrompt } from "./ui/install.js";
@@ -9,8 +9,8 @@ import "./ui/sw-register.js";
 const app = document.getElementById("app");
 
 const state = {
-  mode: localStorage.getItem("mode") || "clinician",
-  theme: localStorage.getItem("theme") || "light",
+  mode: "clinician", // Forzado a modo clínico solamente
+  theme: localStorage.getItem("theme") || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
   fontSize: localStorage.getItem("fontSize") || "medium",
   dataset: null,
   urgencyOnly: false,
@@ -37,13 +37,26 @@ function setFontSize(size) {
   route();
 }
 
-// Attach to window for onclick handlers in router
-window.setTheme = setTheme;
 window.setFontSize = setFontSize;
 
+// Clinical Copy Utility
+window.copyClinicalText = async function(btn) {
+  const box = btn.closest('.clinical-box');
+  const text = box.querySelector('.copy-content').innerText;
+  try {
+    await navigator.clipboard.writeText(text);
+    const original = btn.innerText;
+    btn.innerText = "✅";
+    setTimeout(() => btn.innerText = original, 2000);
+  } catch (err) {
+    console.error("Error al copiar", err);
+  }
+};
+
 function setMode(next) {
-  state.mode = next;
-  localStorage.setItem("mode", next);
+  // Deshabilitado: siempre modo clínico
+  state.mode = "clinician";
+  localStorage.setItem("mode", "clinician");
   route();
 }
 
@@ -68,6 +81,9 @@ function updateDOM() {
     app.innerHTML = renderPrintables(state.dataset);
   } else if (view === "settings") {
     app.innerHTML = renderSettings(state.dataset, state.mode, state);
+  } else if (view === "metabolic") {
+    app.innerHTML = renderMetabolicDashboard();
+    updateMetabolicReport(); // Init report
   } else {
     app.innerHTML = renderHome(state.dataset, state.mode, state);
 
@@ -181,10 +197,6 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  if (e.target.closest("#modeToggle")) {
-    setMode(state.mode === "clinician" ? "patient" : "clinician");
-    return;
-  }
 
   if (e.target.closest("#favToggle")) {
     const id = new URL(location.href).searchParams.get("id");
@@ -251,3 +263,66 @@ window.addEventListener("popstate", route);
     app.innerHTML = `<div class="clinical-box danger" style="margin:20px"><span class="box-title">ERROR DE SISTEMA</span>${e.message}</div>`;
   }
 })();
+
+// --- DASHBOARD UTILITIES ---
+window.updateMetabolicReport = function() {
+  const form = document.getElementById('metabolicForm');
+  if (!form) return;
+  const d = new FormData(form);
+  const w = parseFloat(d.get('weight')) || 0;
+  const h = parseFloat(d.get('height')) || 0;
+  const glucose = parseFloat(d.get('glucose')) || 0;
+  const waist = parseFloat(d.get('waist')) || 0;
+  const ldl = parseFloat(d.get('ldl')) || 0;
+  const sys = parseFloat(d.get('sys')) || 0;
+  const dia = parseFloat(d.get('dia')) || 0;
+
+  const bmi = (w > 0 && h > 0) ? (w / (h * h)).toFixed(1) : '--';
+  
+  let riskItems = [];
+  if (bmi >= 30) riskItems.push("Obesidad (Riesgo Metabólico)");
+  if (glucose >= 100) riskItems.push("Glucosa Alterada (Pre-diabetes/DM2)");
+  if (sys >= 130 || dia >= 80) riskItems.push("Tensión Arterial Elevada");
+  if (ldl >= 130) riskItems.push("Dislipidemia (Riesgo CV)");
+
+  const report = `MONITOREO METABÓLICO (PWA 2026)
+----------------------------------
+PESO: ${w} kg | TALLA: ${h} m | IMC: ${bmi}
+CINTURA: ${waist || '--'} cm
+GLUCOSA: ${glucose || '--'} mg/dL
+P.A.: ${sys || '--'}/${dia || '--'} mmHg
+LDL: ${ldl || '--'} mg/dL
+
+HALLAZGOS CLÍNICOS:
+${riskItems.length ? '• ' + riskItems.join('\n• ') : '• Sin hallazgos de alerta inmediatos.'}
+
+PLAN SUGERIDO: Revisión de terapia metabólica y ajuste nutricional.
+`;
+  const reportEl = document.getElementById('metabolicReportText');
+  if (reportEl) reportEl.innerText = report;
+};
+
+window.copyMetabolicReport = async function() {
+  const text = document.getElementById('metabolicReportText').innerText;
+  try {
+    await navigator.clipboard.writeText(text);
+    alert("Nota clínica copiada al portapapeles.");
+  } catch (e) { console.error(e); }
+};
+
+window.openQuickTool = function(fn) {
+  // Shortcut to open a calculator in the bottom sheet
+  const block = { type: 'calculator', fn: fn, title: fn.toUpperCase(), inputs: [] };
+  // We need to map inputs for quick tools since they aren't in the dataset
+  if (fn === 'bmi') block.inputs = [{key:'weight', label:'Peso (kg)'}, {key:'height', label:'Talla (m)'}];
+  if (fn === 'hr_target') block.inputs = [{key:'age', label:'Edad'}];
+  
+  import("./ui/renderBlocks.js").then(m => {
+    const html = m.renderBlock(state.dataset, block, state.mode);
+    openBottomSheet(`
+      <h2 style="margin-bottom:15px; font-family:var(--font-mono);">⚡ ACCESO_RAPIDO</h2>
+      ${html}
+      <button class="btn" style="width:100%; margin-top:20px;" onclick="document.getElementById('sheetOverlay').click()">CERRAR</button>
+    `);
+  });
+};

@@ -231,11 +231,20 @@ main {
 .clinical-box.warning {
   border-color: var(--warning);
   background: var(--warning-bg);
+  border-left-width: 8px; /* Thicker left border for hierarchy */
 }
 
 .clinical-box.danger {
   border-color: var(--danger);
   background: var(--danger-bg);
+  border-left-width: 8px; /* Thicker left border for red flags */
+  animation: clinicalPulse 3s infinite ease-in-out;
+}
+
+@keyframes clinicalPulse {
+  0% { box-shadow: 0 0 0 0 rgba(217, 48, 37, 0.2); }
+  50% { box-shadow: 0 0 15px 5px rgba(217, 48, 37, 0.1); }
+  100% { box-shadow: 0 0 0 0 rgba(217, 48, 37, 0.2); }
 }
 
 .clinical-box .box-title {
