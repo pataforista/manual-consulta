@@ -74,15 +74,15 @@ function updateDOM() {
   const id = url.searchParams.get("id");
 
   if (view === "topic" && id) {
-    app.innerHTML = renderTopic(state.dataset, id, state.mode, state.favorites.includes(id));
+    app.innerHTML = renderTopic(state.dataset, id, state.mode, state.favorites.includes(id), state.theme);
   } else if (view === "print" && id) {
     app.innerHTML = renderPrintable(state.dataset, id);
   } else if (view === "printables") {
-    app.innerHTML = renderPrintables(state.dataset);
+    app.innerHTML = renderPrintables(state.dataset, state.theme);
   } else if (view === "settings") {
     app.innerHTML = renderSettings(state.dataset, state.mode, state);
   } else if (view === "metabolic") {
-    app.innerHTML = renderMetabolicDashboard();
+    app.innerHTML = renderMetabolicDashboard(state.theme);
     updateMetabolicReport(); // Init report
   } else {
     app.innerHTML = renderHome(state.dataset, state.mode, state);
@@ -204,6 +204,7 @@ document.addEventListener("click", (e) => {
     return;
   }
 
+  if (e.target.closest("#btnThemeToggle")) return setTheme(state.theme === 'dark' ? 'light' : 'dark');
   if (e.target.closest("#btnThemeLight")) return setTheme('light');
   if (e.target.closest("#btnThemeDark")) return setTheme('dark');
   if (e.target.closest("#btnFontSmall")) return setFontSize('small');

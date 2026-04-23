@@ -12,7 +12,7 @@ export function renderHome(dataset, mode, state = {}) {
         <span style="font-size:24px;">🎐</span>
         <h1 style="color:var(--text-main)">Manual Clínico 2026</h1>
       </div>
-
+      <button id="btnThemeToggle" class="btn" style="border:none; font-size:20px; padding:4px 10px; min-height:36px;" title="Cambiar tema">${state.theme === 'dark' ? '☀️' : '🌙'}</button>
     </header>
 
     <div class="search-hero no-print">
@@ -153,7 +153,7 @@ export function renderSettings(dataset, _, state) {
 }
 
 // --- VISTA: TEMA (TOPIC) ---
-export function renderTopic(dataset, id, mode, isFavorite = false) {
+export function renderTopic(dataset, id, mode, isFavorite = false, theme = 'light') {
   const topic = dataset.topicsById[id];
 
   if (!topic) return `<main><div class="clinical-box danger"><span class="box-title">SISTEMA_ERROR</span>Tema no encontrado en la base de datos local.</div><button class="btn" data-nav="home">◂ VOLVER_INICIO</button></main>`;
@@ -165,6 +165,7 @@ export function renderTopic(dataset, id, mode, isFavorite = false) {
       <div style="display:flex; gap:8px;">
           <button class="btn" id="favToggle" title="Favorito" style="font-size:18px; border:none;">${isFavorite ? '✦' : '✧'}</button>
           <button class="btn" onclick="window.print()" style="border:none; font-size:18px;">📜</button>
+          <button id="btnThemeToggle" class="btn" style="border:none; font-size:18px; padding:4px 8px; min-height:36px;" title="Cambiar tema">${theme === 'dark' ? '☀️' : '🌙'}</button>
       </div>
     </header>
     <main>
@@ -199,13 +200,14 @@ export function renderTopic(dataset, id, mode, isFavorite = false) {
 }
 
 // --- VISTA: LISTA DE RECURSOS (PRINTABLES) ---
-export function renderPrintables(dataset) {
+export function renderPrintables(dataset, theme = 'light') {
   const list = Object.values(dataset.printablesById || {});
 
   return `
     <header>
       <button class="btn" data-nav="home" style="border:none; font-size:20px;">◂</button>
       <h1 style="flex:1; margin-left:12px; font-size:1.1rem; color:var(--text-main)">BIBLIOTECA_RECURSOS</h1>
+      <button id="btnThemeToggle" class="btn" style="border:none; font-size:20px; padding:4px 10px; min-height:36px;" title="Cambiar tema">${theme === 'dark' ? '☀️' : '🌙'}</button>
     </header>
     <main>
       <div style="margin-bottom:24px;">
@@ -332,11 +334,12 @@ export function renderPrintable(dataset, id) {
   return `<main><div class="clinical-box warning"><span class="box-title">FORMATO_NO_SOPORTADO</span>No se puede renderizar este recurso automáticamente. Contacte a soporte técnico para este ID: ${item.id}</div><button class="btn" data-nav="printables">◂ VOLVER</button></main>`;
 }
 // --- VISTA: DASHBOARD METABOLICO ---
-export function renderMetabolicDashboard() {
+export function renderMetabolicDashboard(theme = 'light') {
   return `
     <header>
       <button class="btn" data-nav="home" style="border:none; font-size:20px;">◂</button>
       <h1 style="flex:1; margin-left:12px; font-size:1.1rem; color:var(--text-main)">DASHBOARD_METABOLICO</h1>
+      <button id="btnThemeToggle" class="btn" style="border:none; font-size:20px; padding:4px 10px; min-height:36px;" title="Cambiar tema">${theme === 'dark' ? '☀️' : '🌙'}</button>
     </header>
     <main>
       <div class="clinical-box warning">

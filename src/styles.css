@@ -296,6 +296,38 @@ main {
   border: none;
 }
 
+[data-theme="dark"] .badge.urgency {
+  color: #0a080e;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th {
+  background: var(--primary-spirit);
+  color: var(--on-primary);
+  padding: 8px 12px;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--text-muted);
+  color: var(--text-main);
+  vertical-align: top;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
 /* Modal / Overlay */
 .overlay {
   position: fixed;
