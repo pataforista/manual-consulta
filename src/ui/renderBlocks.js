@@ -61,12 +61,12 @@ function renderSubBlocks(dataset, subBlocks, mode) {
 
 function renderLink(url, label) {
   if (!url) return esc(label || "");
-  return `<a href="${esc(url)}" target="_blank" rel="noreferrer" style="color:var(--primary-blue); font-weight:600;">${esc(label || url)}</a>`;
+  return `<a href="${esc(url)}" target="_blank" rel="noreferrer" style="color:var(--primary-spirit); font-weight:600;">${esc(label || url)}</a>`;
 }
 
 export function renderBlock(dataset, b, mode) {
   const type = b.type;
-  const title = b.title ? `<h3 style="margin-top:0; font-size:1.1rem; color:var(--primary-deep)">${esc(b.title)}</h3>` : "";
+  const title = b.title ? `<h3 style="margin-top:0; font-size:1.1rem; color:var(--primary-spirit)">${esc(b.title)}</h3>` : "";
   const share = shareBtn(b);
 
   // Didactic level badge
@@ -166,7 +166,7 @@ export function renderBlock(dataset, b, mode) {
           <span>${esc(it.title || "Detalle")}</span>
           <span style="font-size:12px; opacity:0.5;">▼</span>
         </summary>
-        <div style="padding-top:15px; border-top:1px solid var(--border-light); margin-top:10px;">
+        <div style="padding-top:15px; border-top:1px solid var(--text-muted); margin-top:10px; opacity:0.9;">
           ${esc(it.content || "").replaceAll("\n", "<br>")}
         </div>
       </details>`).join("")}
@@ -181,12 +181,30 @@ export function renderBlock(dataset, b, mode) {
         ${steps.map((step, idx) => `<div class="flow-step">
           <div class="flow-index">${idx + 1}</div>
           <div style="flex:1">
-            <div style="font-weight:700; color:var(--primary-deep);">${esc(step.title || `Paso ${idx + 1}`)}</div>
+            <div style="font-weight:700; color:var(--text-main);">${esc(step.title || `Paso ${idx + 1}`)}</div>
             <p style="margin:4px 0 0; font-size:0.9rem; color:var(--text-muted);">${esc(step.content || "")}</p>
           </div>
         </div>`).join("")}
       </div>
     </div>`;
+  }
+
+  if (type === "printable_ref") {
+    const pid = b.printable_id;
+    if (pid && dataset?.printablesById?.[pid]) {
+      const pr = dataset.printablesById[pid];
+      return `<div class="card clickable" data-nav="print" data-id="${esc(pid)}" style="flex-direction:row; justify-content:space-between; align-items:center; text-align:left; margin:15px 0;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="font-size:28px;">📄</div>
+          <div>
+            <div style="font-weight:700; color:var(--primary-spirit);">${esc(b.title || pr.title)}</div>
+            <small style="color:var(--text-muted);">Recurso imprimible — toque para ver</small>
+          </div>
+        </div>
+        <div style="font-size:20px; color:var(--primary-spirit);">→</div>
+      </div>`;
+    }
+    return "";
   }
 
   if (type === "resource_link") {
@@ -200,7 +218,7 @@ export function renderBlock(dataset, b, mode) {
             <small style="color:var(--text-muted);">Recurso imprimible</small>
           </div>
         </div>
-        <div style="font-size:18px; color:var(--primary-blue);">→</div>
+        <div style="font-size:18px; color:var(--primary-spirit);">→</div>
       </div>`;
     }
     return "";
